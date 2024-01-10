@@ -1,25 +1,29 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/img/logo.png";
 import "../index.css";
+import { SearchBar } from "./SearchBar";
 
 export const BarNav = () => {
   return (
-    <section className="barNav bg-white w-full h-full">
-      <header className="header flex bg-blue-400 w-full h-full">
-        <div className="logoApp flex w-[30%] justify-center items-center">
+    <section className="barNav w-full h-full">
+      <header className="header flex w-full h-full">
+        <div className="logoApp flex w-[33%] justify-center items-center">
           <img src={logo} alt="logo" className="h-20 w-13" />
         </div>
-        <div className="bar bg-red-700 w-[30%] flex justify-end">
-          <nav className="nav bg-green-400 w-[100%]">
-            <ul className="flex bg-red-300 w-[100%] h-[100%] justify-evenly items-center">
+        <div className="search w-[33%] flex justify-center items-center">
+            <SearchBar/>
+        </div>
+        <div className="bar w-[33%] flex justify-end">
+          <nav className="nav w-[100%]">
+            <ul className="flex w-[100%] h-[100%] justify-evenly items-center">
               <li>
-                <Link>Home</Link>
+                <Link className="text-white hover:text-orange-300" to={'/'}>Inicio</Link>
               </li>
               <li>
-                <Link>Login</Link>
+                <Link className="text-white hover:text-orange-300">Iniciar Sesion</Link>
               </li>
               <li>
-                <Link>Sign In</Link>
+                <Link className="text-white hover:text-orange-300">Registrarse</Link>
               </li>
             </ul>
           </nav>
