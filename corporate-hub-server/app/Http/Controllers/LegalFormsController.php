@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Legal_forms;
+use App\Models\Legal_form;
 use Illuminate\Http\Request;
 
 class LegalFormsController extends Controller
@@ -10,9 +10,17 @@ class LegalFormsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getAll()
     {
-        //
+        $allLegalForms = Legal_form::all();
+
+        $data = [
+            'legal_forms' => $allLegalForms
+        ];
+
+        return response()->json([
+            "data" => $data
+        ], 200);
     }
 
     /**
@@ -34,7 +42,7 @@ class LegalFormsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Legal_forms $legal_forms)
+    public function show(Legal_form $legal_forms)
     {
         //
     }
@@ -42,7 +50,7 @@ class LegalFormsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Legal_forms $legal_forms)
+    public function edit(Legal_form $legal_forms)
     {
         //
     }
@@ -50,7 +58,7 @@ class LegalFormsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Legal_forms $legal_forms)
+    public function update(Request $request, Legal_form $legal_forms)
     {
         //
     }
@@ -58,7 +66,7 @@ class LegalFormsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Legal_forms $legal_forms)
+    public function destroy(Legal_form $legal_forms)
     {
         //
     }

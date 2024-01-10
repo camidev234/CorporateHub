@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Countries;
+use App\Models\Country;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CountriesController extends Controller
@@ -10,56 +11,17 @@ class CountriesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getAllCountries() :JsonResponse
     {
-        //
-    }
+        $allCountries = Country::all();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        $data = [
+            "countries" => $allCountries
+        ];
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        return response()->json([
+            "data" => $data
+        ], 200);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Countries $countries)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Countries $countries)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Countries $countries)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Countries $countries)
-    {
-        //
     }
 }
