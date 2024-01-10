@@ -1,10 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PhonesInput } from "./PhonesInput";
 import { RegisterPhonesList } from "./RegisterPhonesList";
 import { EmailsInput } from "./EmailsInput";
 import { RegisterEmailsList } from "./RegisterEmailsList";
+import { fetchAll as getallC } from "../services/CountryService";
+import { fetchAll as getAllLF } from "../services/LegalFormService";
+
 
 export const RegisterUser = () => {
+  const [countries, setCountries] = useState([]);
+  const [legal_forms, setLegalForms] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const responseCountries = await getallC();
+      setCountries(responseCountries);
+      const responseLegalForms = await getAllLF();
+      setLegalForms(responseLegalForms);
+
+    };
+    fetchData();
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -15,10 +32,10 @@ export const RegisterUser = () => {
   const handlePhoneClick = (phone) => {
     setPhones([...phones, phone]);
   };
-  
+
   const handleEmailClick = (email) => {
     setEmails([...emails, email]);
-  }
+  };
 
   const deletePhone = (index) => {
     const newPhones = phones.filter((phone, position) => position !== index);
@@ -28,7 +45,7 @@ export const RegisterUser = () => {
   const deleteEmail = (index) => {
     const newEmails = emails.filter((email, position) => position !== index);
     setEmails(newEmails);
-  }
+  };
 
   return (
     <section className="registerUser w-full h-auto flex justify-center items-center mb-20">
@@ -60,9 +77,13 @@ export const RegisterUser = () => {
         />
         <select
           name="country"
-          className="h-[2.3em] bg-transparent text-white"
+          className="h-[2.3em] bg-transparent text-white focus:bg-gray-800 outline-none"
         >
-          <option value="">Pais</option>
+          {countries.map((country) => (
+            <option value={country.id} key={country.id}>
+              {country.country_name}
+            </option>
+          ))}
         </select>
         <textarea
           cols="30"
@@ -80,9 +101,15 @@ export const RegisterUser = () => {
         />
         <select
           name="legal_form"
-          className="h-[2.3em] bg-transparent text-white"
+          className="h-[2.3em] bg-transparent text-white focus:bg-gray-800 outline-none"
         >
-          <option value="">Forma juridica</option>
+          {
+            legal_forms.map((lf) => {
+              return (
+                <option value={lf.id} key={lf.id}>{lf.legal_form}</option>
+              )
+            })
+          }
         </select>
         <input
           type="password"
@@ -91,16 +118,16 @@ export const RegisterUser = () => {
           text-white focus:border-b focus:border-solid focus:border-white"
         />
         <div className="addPhone">
-            <PhonesInput onAddPhone={handlePhoneClick}/>
+          <PhonesInput onAddPhone={handlePhoneClick} />
         </div>
         <div className="phonesList">
-            <RegisterPhonesList onDeletePhone={deletePhone} phones={phones}/>
+          <RegisterPhonesList onDeletePhone={deletePhone} phones={phones} />
         </div>
         <div className="addEmail">
-            <EmailsInput onAddEmail={handleEmailClick}/>
+          <EmailsInput onAddEmail={handleEmailClick} />
         </div>
         <div className="emailsList">
-            <RegisterEmailsList onDeleteEmail={deleteEmail} emails={emails}/>
+          <RegisterEmailsList onDeleteEmail={deleteEmail} emails={emails} />
         </div>
         <button className="bg-blue-500 rounded-lg h-[2em] text-white hover:bg-orange-500 mt-4">
           Registrar Empresa
