@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('company_nit', 17)->unique();
             $table->string('address', 45);
             $table->foreignId('country_id')->references('id')->on('countries');
-            $table->string('logo', 180);
+            // $table->string('logo', 180);
             $table->string('description', 900);
             $table->string('principal_activity', 90);
             $table->foreignId('legal_form_id')->references('id')->on('legal_forms');
