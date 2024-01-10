@@ -1,26 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PhonesInput } from "./PhonesInput";
 import { RegisterPhonesList } from "./RegisterPhonesList";
 import { EmailsInput } from "./EmailsInput";
 import { RegisterEmailsList } from "./RegisterEmailsList";
-import { fetchAll as getallC } from "../services/CountryService";
-import { fetchAll as getAllLF } from "../services/LegalFormService";
+import { SelectCountry } from "./SelectCountry";
+import { SelectLegalForm } from "./SelectLegalForm";
 
 
 export const RegisterUser = () => {
-  const [countries, setCountries] = useState([]);
-  const [legal_forms, setLegalForms] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const responseCountries = await getallC();
-      setCountries(responseCountries);
-      const responseLegalForms = await getAllLF();
-      setLegalForms(responseLegalForms);
-
-    };
-    fetchData();
-  }, []);
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -75,16 +63,9 @@ export const RegisterUser = () => {
           outline-none
           text-white focus:border-b focus:border-solid focus:border-white"
         />
-        <select
-          name="country"
-          className="h-[2.3em] bg-transparent text-white focus:bg-gray-800 outline-none"
-        >
-          {countries.map((country) => (
-            <option value={country.id} key={country.id}>
-              {country.country_name}
-            </option>
-          ))}
-        </select>
+        <div className="select-country">
+          <SelectCountry/>
+        </div>
         <textarea
           cols="30"
           rows="10"
@@ -99,18 +80,9 @@ export const RegisterUser = () => {
           outline-none
           text-white focus:border-b focus:border-solid focus:border-white"
         />
-        <select
-          name="legal_form"
-          className="h-[2.3em] bg-transparent text-white focus:bg-gray-800 outline-none"
-        >
-          {
-            legal_forms.map((lf) => {
-              return (
-                <option value={lf.id} key={lf.id}>{lf.legal_form}</option>
-              )
-            })
-          }
-        </select>
+        <div className="select-legal-form">
+          <SelectLegalForm/>
+        </div>
         <input
           type="password"
           placeholder="Contraseña"
