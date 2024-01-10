@@ -5,9 +5,11 @@ import { BrowserRouter } from "react-router-dom";
 import { GeneralContextProvider } from "./context/GeneralContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
+
     <GeneralContextProvider>
+        <BrowserRouter>
       <App />
+      </BrowserRouter>
     </GeneralContextProvider>
-  </BrowserRouter>
+  
 );
