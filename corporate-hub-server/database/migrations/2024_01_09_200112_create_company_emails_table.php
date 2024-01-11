@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('email', 60)->unique();
-            $table->string('description', 45)->nullable();
             $table->timestamps();
         });
     }

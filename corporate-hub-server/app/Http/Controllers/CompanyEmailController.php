@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CompanyEmailRequest;
 use App\Models\Company_email;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CompanyEmailController extends Controller
@@ -26,9 +28,16 @@ class CompanyEmailController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CompanyEmailRequest $request, $user_id)
     {
-        //
+        $newEmail = new Company_email();
+
+        $newEmail->user_id = $user_id;
+        $newEmail->email = $request->email;
+
+        $newEmail->save();
+
+        return response()->json(201);
     }
 
     /**

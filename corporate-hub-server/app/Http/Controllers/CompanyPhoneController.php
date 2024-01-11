@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CompanyPhoneRequest;
 use App\Models\Company_phone;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,16 @@ class CompanyPhoneController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CompanyPhoneRequest $request, $user_id)
     {
-        //
+        $newPhone = new Company_phone();
+
+        $newPhone->user_id = $user_id;
+        $newPhone->phone = $request->phone;
+
+        $newPhone->save();
+
+        return response()->json(201);
     }
 
     /**
