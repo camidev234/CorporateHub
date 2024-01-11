@@ -1,7 +1,8 @@
 import { fetchAll as getAllLF } from "../services/LegalFormService";
 import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 
-export const SelectLegalForm = () => {
+export const SelectLegalForm = ({ onSelectForm }) => {
   const [legal_forms, setLegalForms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -20,6 +21,12 @@ export const SelectLegalForm = () => {
     getData();
   }, []);
 
+  const handleSelect = (e) => {
+    const selectedFormId = e.target.value;
+    onSelectForm(selectedFormId);
+
+  } 
+
   return (
     <div className="container">
       {isLoading ? (
@@ -30,6 +37,7 @@ export const SelectLegalForm = () => {
         <select
           name="legal_form"
           className="h-[2.3em] bg-transparent text-white focus:bg-gray-800 outline-none w-full"
+          onChange={handleSelect}
         >
           {legal_forms.map((lf) => {
             return (
@@ -43,3 +51,7 @@ export const SelectLegalForm = () => {
     </div>
   );
 };
+
+SelectLegalForm.propTypes = {
+    onSelectForm: PropTypes.func.isRequired
+}

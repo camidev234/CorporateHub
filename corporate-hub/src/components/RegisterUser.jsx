@@ -5,10 +5,14 @@ import { EmailsInput } from "./EmailsInput";
 import { RegisterEmailsList } from "./RegisterEmailsList";
 import { SelectCountry } from "./SelectCountry";
 import { SelectLegalForm } from "./SelectLegalForm";
-
+import { createUser } from "../services/UserService";
+import { SavingAlert } from "./SavingAlert";
+import { SuccesAlert } from "./SuccesAlert";
+import { useNavigate } from 'react-router-dom'
 
 export const RegisterUser = () => {
-  
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,6 +20,39 @@ export const RegisterUser = () => {
 
   const [phones, setPhones] = useState([]);
   const [emails, setEmails] = useState([]);
+  const [send, setSend] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+
+  const [user, setUser] = useState({
+    company_name: "",
+    company_nit: "",
+    address: "",
+    country_id: 1,
+    description: "",
+    principal_activity: "",
+    legal_form_id: 1,
+    password: "",
+  });
+
+  const saveUser = async () => {
+    try {
+      setSend(true);
+      const response = await createUser(user);
+      setSend(false);
+      if(response.status == 201){
+        setIsSaved(true);
+        setTimeout(() => {
+          setIsSaved(false);
+          navigate('/');
+        }, 1500)
+      } else {
+        setIsSaved(false);
+      }
+      console.log(response);
+    } catch (error) {
+        alert('Internal server error');
+    } 
+  }
 
   const handlePhoneClick = (phone) => {
     setPhones([...phones, phone]);
@@ -35,8 +72,46 @@ export const RegisterUser = () => {
     setEmails(newEmails);
   };
 
+  const handleNameChange = (e) => {
+    setUser({ ...user, company_name: e.target.value });
+  };
+
+  const handleNitChange = (e) => {
+    setUser({ ...user, company_nit: e.target.value });
+  };
+
+  const handleAddressChange = (e) => {
+    setUser({ ...user, address: e.target.value });
+  };
+
+  const handleDescriptionChange = (e) => {
+    setUser({ ...user, description: e.target.value });
+  };
+
+  const handleActivityChange = (e) => {
+    setUser({ ...user, principal_activity: e.target.value });
+  };
+
+  const handleChangePassword = (e) => {
+    setUser({ ...user, password: e.target.value });
+  };
+
+  const handleSelectCountry = (selectedCountryId) => {
+    setUser({ ...user, country_id: parseInt(selectedCountryId) });
+  };
+
+  const handleSelectForm = (selectedFormId) => {
+    setUser({ ...user, legal_form_id: parseInt(selectedFormId) });
+  };
+
   return (
     <section className="registerUser w-full h-auto flex justify-center items-center mb-20">
+      {
+        send ? <SavingAlert isSend={send}/> : null
+      }
+      {
+        isSaved ? <SuccesAlert/> : null
+      }
       <form
         action=""
         onSubmit={handleSubmit}
@@ -45,6 +120,8 @@ export const RegisterUser = () => {
         <input
           type="text"
           name="company"
+          onChange={handleNameChange}
+          value={user.company_name}
           placeholder="Empresa"
           className="h-[2.3em]s bg-transparent border-b border-solid border-gray-500 pb-2 outline-none
           text-white focus:border-b focus:border-solid focus:border-white"
@@ -52,6 +129,8 @@ export const RegisterUser = () => {
         <input
           type="text"
           placeholder="Nit"
+          value={user.company_nit}
+          onChange={handleNitChange}
           className=" h-[2.3em] bg-transparent border-b border-solid border-gray-500 pb-2
           outline-none
           text-white focus:border-b focus:border-solid focus:border-white"
@@ -59,16 +138,20 @@ export const RegisterUser = () => {
         <input
           type="text"
           placeholder="Direccion"
+          onChange={handleAddressChange}
+          value={user.address}
           className=" h-[2.3em] bg-transparent border-b border-solid border-gray-500 pb-2 
           outline-none
           text-white focus:border-b focus:border-solid focus:border-white"
         />
         <div className="select-country">
-          <SelectCountry/>
+          <SelectCountry onSelectCountry={handleSelectCountry} />
         </div>
         <textarea
           cols="30"
           rows="10"
+          onChange={handleDescriptionChange}
+          value={user.description}
           placeholder="Resumen de la empresa"
           className=" h-[2.3em] bg-transparent border-b border-solid border-gray-500 pb-2 outline-none
           text-white focus:border-b focus:border-solid focus:border-white"
@@ -76,16 +159,20 @@ export const RegisterUser = () => {
         <input
           type="text"
           placeholder="Actividad principal"
+          onChange={handleActivityChange}
+          value={user.principal_activity}
           className=" h-[2.3em] bg-transparent border-b border-solid border-gray-500 pb-2 
           outline-none
           text-white focus:border-b focus:border-solid focus:border-white"
         />
         <div className="select-legal-form">
-          <SelectLegalForm/>
+          <SelectLegalForm onSelectForm={handleSelectForm}/>
         </div>
         <input
           type="password"
           placeholder="Contraseña"
+          onChange={handleChangePassword}
+          value={user.password}
           className=" h-[2.3em] bg-transparent border-b border-solid border-gray-500 pb-2 outline-none
           text-white focus:border-b focus:border-solid focus:border-white"
         />
@@ -101,7 +188,9 @@ export const RegisterUser = () => {
         <div className="emailsList">
           <RegisterEmailsList onDeleteEmail={deleteEmail} emails={emails} />
         </div>
-        <button className="bg-blue-500 rounded-lg h-[2em] text-white hover:bg-orange-500 mt-4">
+        <button className="bg-blue-500 rounded-lg h-[2em] text-white hover:bg-orange-500 mt-4"
+        onClick={saveUser}
+        >
           Registrar Empresa
         </button>
       </form>

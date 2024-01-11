@@ -1,8 +1,10 @@
 import { fetchAll as getallC } from "../services/CountryService";
 import { useState, useEffect } from "react";
 import '../assets/styles/spinner.css';
+import PropTypes from 'prop-types';
 
-export const SelectCountry = () => {
+
+export const SelectCountry = ({ onSelectCountry }) => {
   const [countries, setCountries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,6 +24,11 @@ export const SelectCountry = () => {
     getData();
   }, []);
 
+  const handleCountryChange = (e) => {
+    const selectedCountryId = e.target.value;
+    onSelectCountry(selectedCountryId);
+  };
+
   return (
     <div className="container">
       {isLoading ? (
@@ -32,6 +39,7 @@ export const SelectCountry = () => {
         <select
           name="country"
           className="h-[2.3em] bg-transparent text-white focus:bg-gray-800 outline-none w-full"
+          onChange={handleCountryChange}
         >
           {countries.map((country) => (
             <option value={country.id} key={country.id}>
@@ -43,3 +51,7 @@ export const SelectCountry = () => {
     </div>
   );
 };
+
+SelectCountry.propTypes = {
+    onSelectCountry: PropTypes.func.isRequired
+}
