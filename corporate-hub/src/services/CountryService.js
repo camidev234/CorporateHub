@@ -8,6 +8,7 @@ export const fetchAll = async () => {
 
     return response.data.data.countries;
   } catch (error) {
-    alert('Error interno del servidor');
+    console.error(error);
+    throw error;
   }
 };

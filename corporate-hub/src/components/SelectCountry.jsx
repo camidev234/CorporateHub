@@ -2,9 +2,12 @@ import { fetchAll as getallC } from "../services/CountryService";
 import { useState, useEffect } from "react";
 import '../assets/styles/spinner.css';
 import PropTypes from 'prop-types';
-
+import { useNavigate } from "react-router-dom";
 
 export const SelectCountry = ({ onSelectCountry }) => {
+  
+  const navigate = useNavigate();
+
   const [countries, setCountries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -14,15 +17,16 @@ export const SelectCountry = ({ onSelectCountry }) => {
         const responseCountries = await getallC();
         setCountries(responseCountries);
       } catch (error) {
-        console.error(error);
         setIsLoading(true);
+        navigate("/");
+        throw error;
       } finally {
         setIsLoading(false);
       }
     };
 
     getData();
-  }, []);
+  }, [navigate]);
 
   const handleCountryChange = (e) => {
     const selectedCountryId = e.target.value;

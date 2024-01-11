@@ -1,10 +1,13 @@
 import { fetchAll as getAllLF } from "../services/LegalFormService";
 import { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
+import { useNavigate } from "react-router-dom";
 
 export const SelectLegalForm = ({ onSelectForm }) => {
   const [legal_forms, setLegalForms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
@@ -12,14 +15,15 @@ export const SelectLegalForm = ({ onSelectForm }) => {
         const responseLegalForms = await getAllLF();
         setLegalForms(responseLegalForms);
       } catch (error) {
-        console.log(error);
         setIsLoading(true);
+        navigate('/');
+        alert(error);
       } finally {
         setIsLoading(false);
       }
     };
     getData();
-  }, []);
+  }, [navigate]);
 
   const handleSelect = (e) => {
     const selectedFormId = e.target.value;

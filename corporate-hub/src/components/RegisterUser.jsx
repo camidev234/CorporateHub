@@ -56,7 +56,6 @@ export const RegisterUser = () => {
       } else {
         setIsSaved(false);
       }
-      console.log(response);
     } catch (error) {
         alert('Internal server error');
     } 
