@@ -7,9 +7,8 @@ import { GeneralContextProvider } from "./context/GeneralContext";
 ReactDOM.createRoot(document.getElementById("root")).render(
 
     <GeneralContextProvider>
-        <BrowserRouter>
-      <App />
+      <BrowserRouter>
+        <App />
       </BrowserRouter>
     </GeneralContextProvider>
-  
 );

@@ -38,6 +38,7 @@ export const SelectCountry = ({ onSelectCountry }) => {
       {isLoading ? (
         <div className="spinnerCont w-full h-[2.3em] flex items-center">
             <div className="spinner"></div>
+            <h1 className="text-white ml-11">Pais</h1>
         </div>
       ) : (
         <select

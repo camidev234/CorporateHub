@@ -8,7 +8,7 @@ export const fetchAll = async () => {
 
     return response.data.data.countries;
   } catch (error) {
-    console.error(error);
+    console.error('Internal server error');
     throw error;
   }
 };

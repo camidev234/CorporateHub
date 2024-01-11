@@ -16,8 +16,7 @@ export const SelectLegalForm = ({ onSelectForm }) => {
         setLegalForms(responseLegalForms);
       } catch (error) {
         setIsLoading(true);
-        navigate('/');
-        alert(error);
+        navigate('/error500');
       } finally {
         setIsLoading(false);
       }
@@ -36,6 +35,7 @@ export const SelectLegalForm = ({ onSelectForm }) => {
       {isLoading ? (
         <div className="spinnerCont w-full h-[2.3em] flex items-center">
           <div className="spinner"></div>
+          <h1 className="text-white ml-11">Forma Juridica</h1>
         </div>
       ) : (
         <select

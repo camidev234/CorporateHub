@@ -7,7 +7,7 @@ export const fetchAll = async () => {
     );
     return response.data.data.legal_forms;
   } catch (error) {
-    console.error(error);
+    console.error('internal server error');
     throw error;
   }
 };
