@@ -16,3 +16,7 @@ Route::post('/corporate-hub/save-email/{email}/{user_id}', [CompanyEmailControll
 Route::post('/corporate-hub/save-phone/{phone}/{user_id}', [CompanyPhoneController::class, 'store']);
 
 Route::post('/corporate-hub/login', [AuthController::class, 'login']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+});

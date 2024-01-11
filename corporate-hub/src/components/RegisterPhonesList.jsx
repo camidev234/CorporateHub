@@ -17,7 +17,7 @@ export const RegisterPhonesList = ({ phones, onDeletePhone }) => {
               >
                 {phoneActual}{" "}
                 <button
-                  className="bg-gray-600 w-[25px] h-full rounded-full flex items-center justify-center"
+                  className="bg-gray-600 w-[25px] h-full rounded-full flex items-center justify-center hover:bg-gray-800"
                   onClick={() => deletePhone(index)}
                 >
                   <BsX />
