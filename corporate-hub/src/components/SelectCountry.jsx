@@ -34,7 +34,7 @@ export const SelectCountry = ({ onSelectCountry }) => {
   };
 
   return (
-    <div className="container">
+    <div className="container z-0">
       {isLoading ? (
         <div className="spinnerCont w-full h-[2.3em] flex items-center">
             <div className="spinner"></div>

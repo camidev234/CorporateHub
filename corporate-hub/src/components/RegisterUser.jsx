@@ -112,7 +112,7 @@ export const RegisterUser = () => {
   };
 
   return (
-    <section className="registerUser w-full h-auto flex justify-center items-center mb-20">
+    <section className="registerUser w-full h-auto flex justify-center items-center mb-20 z-10">
       {
         send ? <SavingAlert isSend={send}/> : null
       }

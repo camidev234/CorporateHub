@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="navegation border-b border-solid border-gray-600 h-[13vh] sticky top-0 bg-[#161616]">
+      <div className="navegation border-b border-solid border-gray-600 h-[13vh] top-0 bg-[#161616] sticky z-50">
         <BarNav/>
       </div>
       <Routes>
