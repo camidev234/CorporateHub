@@ -27,12 +27,12 @@ class CompanyPhoneController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CompanyPhoneRequest $request, $user_id)
+    public function store($phone, $user_id)
     {
         $newPhone = new Company_phone();
 
         $newPhone->user_id = $user_id;
-        $newPhone->phone = $request->phone;
+        $newPhone->phone = $phone;
 
         $newPhone->save();
 

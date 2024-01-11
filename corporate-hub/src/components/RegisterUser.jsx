@@ -9,6 +9,8 @@ import { createUser } from "../services/UserService";
 import { SavingAlert } from "./SavingAlert";
 import { SuccesAlert } from "./SuccesAlert";
 import { useNavigate } from 'react-router-dom'
+import { saveEmails } from "../services/CompanyEmailsService";
+import { savePhones } from "../services/CompanyPhonesService";
 
 export const RegisterUser = () => {
 
@@ -41,6 +43,12 @@ export const RegisterUser = () => {
       setSend(false);
       if(response.status == 201){
         setIsSaved(true);
+        if(emails.length !== 0){
+          await saveEmails(emails, response.data.data.user.id);
+        }
+        if(phones.length !== 0){
+          await savePhones(phones, response.data.data.user.id);
+        }
         setTimeout(() => {
           setIsSaved(false);
           navigate('/');

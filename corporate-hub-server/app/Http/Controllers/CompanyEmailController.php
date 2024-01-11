@@ -28,12 +28,12 @@ class CompanyEmailController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CompanyEmailRequest $request, $user_id)
+    public function store($email, $user_id)
     {
         $newEmail = new Company_email();
 
         $newEmail->user_id = $user_id;
-        $newEmail->email = $request->email;
+        $newEmail->email = $email;
 
         $newEmail->save();
 
