@@ -195,7 +195,7 @@ export const RegisterUser = () => {
         <div className="emailsList">
           <RegisterEmailsList onDeleteEmail={deleteEmail} emails={emails} />
         </div>
-        <button className="bg-blue-500 rounded-lg h-[2em] text-white hover:bg-orange-500 mt-4"
+        <button className="bg-blue-800 rounded-lg h-[2em] text-white hover:bg-orange-500 mt-4"
         onClick={saveUser}
         >
           Registrar Empresa

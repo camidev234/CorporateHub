@@ -3,6 +3,7 @@ import { BarNav } from './BarNav';
 import { LandingPage } from '../pages/LandingPage';
 import { SignInPage } from '../pages/SignInPage';
 import { Error500 } from './Error500';
+import { LoginPage } from '../pages/LoginPage';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' element={<LandingPage />}/>
         <Route path='/register-company' element={<SignInPage />}/>
         <Route path='/error500' element={<Error500/>}/>
+        <Route path='/login' element={<LoginPage/>}/>
       </Routes>
     </div>
   )

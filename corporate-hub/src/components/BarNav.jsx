@@ -20,7 +20,7 @@ export const BarNav = () => {
                 <Link className="text-white hover:text-orange-300" to={'/'}>Inicio</Link>
               </li>
               <li>
-                <Link className="text-white hover:text-orange-300">Iniciar Sesion</Link>
+                <Link className="text-white hover:text-orange-300" to={'/login'}>Iniciar Sesion</Link>
               </li>
               <li>
                 <Link className="text-white hover:text-orange-300" to={'/register-company'}>Registrarse</Link>
