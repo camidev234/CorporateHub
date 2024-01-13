@@ -51,7 +51,7 @@ export const RegisterUser = () => {
         }
         setTimeout(() => {
           setIsSaved(false);
-          navigate('/');
+          navigate('/login');
         }, 1500)
       } else {
         setIsSaved(false);

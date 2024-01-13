@@ -4,13 +4,24 @@ import { LandingPage } from '../pages/LandingPage';
 import { SignInPage } from '../pages/SignInPage';
 import { Error500 } from './Error500';
 import { LoginPage } from '../pages/LoginPage';
+import { useContext } from "react";
+import { GeneralContext } from "../context/GeneralContext";
+import { BarNavAuth } from './BarNavAuth';
 
 function App() {
+
+  const { token, isAuth } = useContext(GeneralContext);
 
   return (
     <div className="App">
       <div className="navegation border-b border-solid border-gray-600 h-[13vh] top-0 bg-[#161616] sticky z-50">
-        <BarNav/>
+        {
+          token !== "" && isAuth ? (
+            <BarNavAuth/>
+          ) : (
+            <BarNav/>
+          )
+        }
       </div>
       <Routes>
         <Route path='/' element={<LandingPage />}/>

@@ -15,6 +15,7 @@ export const  GeneralContextProvider = (props) => {
 
     const logout = () => {
         setAuthToken("");
+        setIsAuth(false);
     };
 
     return (
@@ -23,7 +24,7 @@ export const  GeneralContextProvider = (props) => {
                 token: authToken,
                 onLogin: login,
                 onLogout: logout,
-                isAuth
+                isAuth: isAuth
             }}
         >
             {props.children}

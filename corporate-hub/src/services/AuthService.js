@@ -20,3 +20,18 @@ export const loginUser = async (nit, password) => {
     errorService = error.response.status;
   }
 };
+
+export const logout = async (authToken) => {
+    try {
+        const url = "http://127.0.0.1:8000/api/logout";
+        const response = axios.post(url, {}, {
+            headers: {
+                Authorization: `Bearer ${authToken}`
+            }
+        });
+
+        return response;
+    } catch (error) {
+        errorService = error.response.status;
+    }
+}

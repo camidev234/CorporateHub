@@ -4,6 +4,7 @@ import "../index.css";
 import { SearchBar } from "./SearchBar";
 
 export const BarNav = () => {
+
   return (
     <section className="barNav w-full h-full">
       <header className="header flex w-full h-full">
