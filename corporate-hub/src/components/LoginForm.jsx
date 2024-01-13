@@ -3,10 +3,17 @@ import { useContext } from "react";
 import { GeneralContext } from "../context/GeneralContext";
 import { Link } from "react-router-dom";
 import { BsBuildings, BsKeyFill, BsEye, BsEyeSlash } from "react-icons/bs";
+import { loginUser, errorService as e } from "../services/AuthService";
+import { LoginWindow } from "./LoginWindow";
+import { ErrorLogin } from "./ErrorLogin";
 
 export const LoginForm = () => {
-  const { onUpdateToken } = useContext(GeneralContext);
+  const { onLogin } = useContext(GeneralContext);
   const [showPassword, setShowPassword] = useState(false);
+
+  const [hasError, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorCode, setErrorCode] = useState(0);
 
   const [nit, setNit] = useState("");
   const [password, setPassword] = useState("");
@@ -23,8 +30,39 @@ export const LoginForm = () => {
     setPassword(e.target.value);
   };
 
+  const authUser = async () => {
+    try {
+      setLoading(true);
+      const response = await loginUser(nit, password);
+      if (response.status === 200) {
+        onLogin(response.data.auth_data.access_token);
+        alert(response.data.auth_data.access_token);
+      }
+    } catch (error) {
+      setError(true);
+      setLoading(false);
+      setErrorCode(e);
+      setTimeout(() => {
+        setError(false);
+      }, 1800);
+      throw error;
+    } finally {
+        setLoading(false);
+    }
+  };
+
   return (
     <section className="loginForm">
+      {
+        loading ? (
+            <LoginWindow isLoading={loading} hasError={hasError} errorCode={errorCode}/>
+        ) : null
+      }
+      {
+        hasError ? (
+            <ErrorLogin errorCode={errorCode}/>
+        ) : null
+      }
       <form
         action=""
         onSubmit={(e) => e.preventDefault()}
@@ -67,13 +105,18 @@ export const LoginForm = () => {
             {showPassword ? <BsEyeSlash /> : <BsEye />}
           </div>
         </div>
-        <button className="bg-blue-800 h-9 text-white hover:bg-orange-600 rounded-xl">
+        <button
+          className="bg-blue-800 h-9 text-white hover:bg-orange-600 rounded-xl"
+          onClick={authUser}
+        >
           Iniciar sesión
         </button>
       </form>
       <div className="info flex flex-col justify-between items-center mt-4 ">
         <span className="text-white">¿No tienes una cuenta?</span>
-        <Link className="text-blue-400 p-1 text-sm" to={'/register-company'}>Registra tu empresa</Link>
+        <Link className="text-blue-400 p-1 text-sm" to={"/register-company"}>
+          Registra tu empresa
+        </Link>
       </div>
     </section>
   );

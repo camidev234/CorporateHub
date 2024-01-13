@@ -6,9 +6,11 @@ export const GeneralContext = createContext();
 export const  GeneralContextProvider = (props) => {
 
     const [ authToken, setAuthToken ] = useState("");
+    const [ isAuth, setIsAuth ] = useState(false);
 
-    const updateToken = (token) => {
+    const login = (token) => {
         setAuthToken(token);
+        setIsAuth(true);
     };
 
     const logout = () => {
@@ -19,8 +21,9 @@ export const  GeneralContextProvider = (props) => {
         <GeneralContext.Provider 
             value={{
                 token: authToken,
-                onUpdateToken: updateToken,
-                onLogout: logout
+                onLogin: login,
+                onLogout: logout,
+                isAuth
             }}
         >
             {props.children}
