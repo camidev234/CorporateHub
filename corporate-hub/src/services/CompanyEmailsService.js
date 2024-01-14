@@ -15,3 +15,23 @@ export const saveEmails = async (emails, user_id) => {
     console.error("Error during email saving:", error);
   }
 };
+
+export const getCompanyEmails = async (token, user_id) => {
+  try {
+    const url = `http://127.0.0.1:8000/api/getEmails/${user_id}`;
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if(response.status === 200) {
+      return response.data.emails;
+    }
+
+    return response.data.alert;
+    
+  } catch (error) {
+    console.error('Error during email get: ', error);
+  }
+};

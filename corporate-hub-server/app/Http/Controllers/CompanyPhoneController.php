@@ -31,7 +31,7 @@ class CompanyPhoneController extends Controller
             ], 404);
         } else {
             return response()->json([
-                'emails' => $phones
+                'phones' => $phones
             ], 200);
         }
     }
