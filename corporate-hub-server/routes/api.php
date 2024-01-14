@@ -19,4 +19,6 @@ Route::post('/corporate-hub/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/getEmails/{user_id}', [CompanyEmailController::class, 'getEmails']);
+    Route::get('/getPhones/{user_id}', [CompanyPhoneController::class, 'getPhones']);
 });
