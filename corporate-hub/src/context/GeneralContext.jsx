@@ -8,6 +8,10 @@ export const  GeneralContextProvider = (props) => {
     const [ authToken, setAuthToken ] = useState("");
     const [ isAuth, setIsAuth ] = useState(false);
 
+    const [ userAuth, setUserAuth ] = useState({});
+
+    const [ companyName, setCompanyName ] = useState("");
+
     const login = (token) => {
         setAuthToken(token);
         setIsAuth(true);
@@ -18,13 +22,25 @@ export const  GeneralContextProvider = (props) => {
         setIsAuth(false);
     };
 
+    const getCompanyName = (company) => {
+        setCompanyName(company);
+    }
+
+    const getUserAuthInfo = (user) => {
+        setUserAuth(user);
+    }
+
     return (
         <GeneralContext.Provider 
             value={{
                 token: authToken,
                 onLogin: login,
                 onLogout: logout,
-                isAuth: isAuth
+                isAuth: isAuth,
+                onGetCompanyName: getCompanyName,
+                companyName,
+                onGetUserAuthInfo: getUserAuthInfo,
+                userAuth
             }}
         >
             {props.children}

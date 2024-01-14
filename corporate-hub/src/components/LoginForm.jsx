@@ -6,9 +6,13 @@ import { BsBuildings, BsKeyFill, BsEye, BsEyeSlash } from "react-icons/bs";
 import { loginUser, errorService as e } from "../services/AuthService";
 import { LoginWindow } from "./LoginWindow";
 import { ErrorLogin } from "./ErrorLogin";
+import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
-  const { onLogin } = useContext(GeneralContext);
+
+  const navigate = useNavigate();
+
+  const { onLogin,  onGetCompanyName, onGetUserAuthInfo } = useContext(GeneralContext);
   const [showPassword, setShowPassword] = useState(false);
 
   const [hasError, setError] = useState(false);
@@ -36,7 +40,10 @@ export const LoginForm = () => {
       const response = await loginUser(nit, password);
       if (response.status === 200) {
         onLogin(response.data.auth_data.access_token);
-        alert(response.data.auth_data.access_token);
+        onGetCompanyName(response.data.auth_data.user.company_name);
+        onGetUserAuthInfo(response.data.auth_data.user);
+        navigate('/dashboard/my-company');
+        console.log(response.data);
       }
     } catch (error) {
       setError(true);
