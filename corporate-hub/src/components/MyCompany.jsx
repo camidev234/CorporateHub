@@ -1,8 +1,15 @@
 import { useContext, useState } from "react";
 import { GeneralContext } from "../context/GeneralContext";
 import { useEffect } from "react";
-import { getCompanyEmails, saveEmails } from "../services/CompanyEmailsService";
-import { getCompanyPhones } from "../services/CompanyPhonesService";
+import {
+  deleteCompanyEmail,
+  getCompanyEmails,
+  saveEmails,
+} from "../services/CompanyEmailsService";
+import {
+  deleteCompanyPhone,
+  getCompanyPhones,
+} from "../services/CompanyPhonesService";
 import { BsX } from "react-icons/bs";
 import { savePhones } from "../services/CompanyPhonesService";
 import { ModalAddPhones } from "./ModalAddPhones";
@@ -77,9 +84,9 @@ export const MyCompany = () => {
     }
   };
 
-  const handleAddEmails = async() => {
+  const handleAddEmails = async () => {
     try {
-      if(emailsAdd.length !== 0) {
+      if (emailsAdd.length !== 0) {
         setModalVisible(false);
         await saveEmails(emailsAdd, userAuth.id);
         setEmailsAdd([]);
@@ -91,7 +98,31 @@ export const MyCompany = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
+
+  const handleDeleteEmail = async (email_id) => {
+    try {
+      setIsLoading(true);
+      await deleteCompanyEmail(token, email_id);
+      const responseEmails = await getCompanyEmails(token, userAuth.id);
+      setEmails(responseEmails);
+      setIsLoading(false);
+    } catch (error) {
+      alert("an error ocurred");
+    }
+  };
+
+  const handleDeletePhone = async (phone_id) => {
+    try {
+      setIsLoading(true);
+      await deleteCompanyPhone(token, phone_id);
+      const responsePhones = await getCompanyPhones(token, userAuth.id);
+      setPhones(responsePhones);
+      setIsLoading(false);
+    } catch (error) {
+      alert("an error ocurred");
+    }
+  };
 
   return (
     <section className="">
@@ -180,10 +211,13 @@ export const MyCompany = () => {
                   return (
                     <div
                       className="gap-2 bg-gray-700 p-1 flex rounded-lg"
-                      key={phone.phone.id}
+                      key={phone.id}
                     >
                       <h2>{phone.phone}</h2>
-                      <button className="bg-gray-600 rounded-full">
+                      <button
+                        className="bg-gray-600 rounded-full"
+                        onClick={() => handleDeletePhone(phone.id)}
+                      >
                         <BsX />
                       </button>
                     </div>
@@ -199,12 +233,15 @@ export const MyCompany = () => {
                 {emails.map((email) => {
                   return (
                     <div
-                      className="gap-2  p-1 flex rounded-lg hover:bg-gray-700 hover:cursor-pointer"
-                      key={email.email.id}
+                      className="gap-2 bg-gray-700 p-1 flex rounded-lg"
+                      key={email.id}
                     >
                       <h2>{email.email}</h2>
-                      <button className=" rounded-full">
-                        <BsX className="text-red-500" />
+                      <button
+                        className=" rounded-full"
+                        onClick={() => handleDeleteEmail(email.id)}
+                      >
+                        <BsX className="" />
                       </button>
                     </div>
                   );

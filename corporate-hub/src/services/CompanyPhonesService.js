@@ -36,3 +36,22 @@ export const getCompanyPhones = async (token, user_id) => {
     console.error('Error during phones get: ', error);
   }
 };
+
+export const deleteCompanyPhone = async (token, companyPhone_id) => {
+  try {
+    const url = `http://127.0.0.1:8000/api/deletePhone/${companyPhone_id}`;
+    const response = await axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if(response.status === 204) {
+      return response.status;
+    }
+
+  } catch (error) {
+    console.error('Error during company phone deleting');
+    return 'internal server error';
+  }
+};

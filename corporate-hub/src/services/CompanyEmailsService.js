@@ -35,3 +35,22 @@ export const getCompanyEmails = async (token, user_id) => {
     console.error('Error during email get: ', error);
   }
 };
+
+export const deleteCompanyEmail = async (token, companyEmail_id) => {
+  try {
+    const url = `http://127.0.0.1:8000/api/deleteEmail/${companyEmail_id}`;
+    const response = await axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    if(response.status === 204) {
+      return response.status;
+    }
+
+  } catch (error) {
+    console.error('Error during company email deleting');
+    return 'internal server error';
+  }
+};
