@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
 import { GeneralContext } from "../context/GeneralContext";
 import { useEffect } from "react";
-import { getCompanyEmails } from "../services/CompanyEmailsService";
+import { getCompanyEmails, saveEmails } from "../services/CompanyEmailsService";
 import { getCompanyPhones } from "../services/CompanyPhonesService";
 import { BsX } from "react-icons/bs";
 import { savePhones } from "../services/CompanyPhonesService";
 import { ModalAddPhones } from "./ModalAddPhones";
+import { ModalAddEmails } from "./ModalAddEmails";
 
 export const MyCompany = () => {
   const { userAuth, token } = useContext(GeneralContext);
@@ -14,7 +15,9 @@ export const MyCompany = () => {
   const [emails, setEmails] = useState([]);
   const [phones, setPhones] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalOpen, setModalOpen] = useState(0);
   const [phonesAdd, setPhonesAdd] = useState([]);
+  const [emailsAdd, setEmailsAdd] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -30,12 +33,14 @@ export const MyCompany = () => {
     getData();
   }, [token, userAuth]);
 
-  const openModal = () => {
+  const openModal = (state) => {
     setModalVisible(true);
+    setModalOpen(state);
   };
 
   const closeModal = () => {
     setModalVisible(false);
+    setModalOpen(0);
   };
 
   const addPhone = (phone) => {
@@ -45,6 +50,15 @@ export const MyCompany = () => {
   const deletePhoneAdd = (index) => {
     const newPhonesAdd = phonesAdd.filter((phone, i) => i !== index);
     setPhonesAdd(newPhonesAdd);
+  };
+
+  const addEmail = (email) => {
+    setEmailsAdd([...emailsAdd, email]);
+  };
+
+  const deleteEmailAdd = (index) => {
+    const newEmailsAdd = emailsAdd.filter((email, i) => i !== index);
+    setEmailsAdd(newEmailsAdd);
   };
 
   const handleAddPhones = async () => {
@@ -63,6 +77,22 @@ export const MyCompany = () => {
     }
   };
 
+  const handleAddEmails = async() => {
+    try {
+      if(emailsAdd.length !== 0) {
+        setModalVisible(false);
+        await saveEmails(emailsAdd, userAuth.id);
+        setEmailsAdd([]);
+        setIsLoading(true);
+        const responseEmails = await getCompanyEmails(token, userAuth.id);
+        setEmails(responseEmails);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <section className="">
       {isLoading ? (
@@ -71,7 +101,7 @@ export const MyCompany = () => {
         </div>
       ) : (
         <section className="companyInfo bg-gray-800 w-[95%] rounded-lg h-auto pl-5 pr-5 pb-7 text-white">
-          {modalVisible ? (
+          {modalVisible && modalOpen == 0 ? (
             <div className="succesContainer fixed top-0 left-0 w-full h-full flex justify-center items-center z-40 bg-black bg-opacity-50 p-4">
               <ModalAddPhones
                 onCloseModal={closeModal}
@@ -81,7 +111,18 @@ export const MyCompany = () => {
                 onSavePhones={handleAddPhones}
               />
             </div>
+          ) : modalVisible && modalOpen == 1 ? (
+            <div className="succesContainer fixed top-0 left-0 w-full h-full flex justify-center items-center z-40 bg-black bg-opacity-50 p-4">
+              <ModalAddEmails
+                onCloseModal={closeModal}
+                onAddEmail={addEmail}
+                onDeleteEmail={deleteEmailAdd}
+                emailsAdd={emailsAdd}
+                onSaveEmails={handleAddEmails}
+              />
+            </div>
           ) : null}
+
           <article className="title flex items-center h-28 justify-between">
             <div className="w-[40%]">
               <h1 className="text-2xl">{userAuth.company_name}</h1>
@@ -89,11 +130,18 @@ export const MyCompany = () => {
             <div className="actions w-[50%] flex justify-around h-[100%] items-center">
               <button
                 className="bg-green-500 h-[37px] pl-2 pr-2 rounded-lg hover:bg-green-600"
-                onClick={openModal}
+                onClick={() => {
+                  openModal(0);
+                }}
               >
                 Agregar Telefono
               </button>
-              <button className="bg-green-500 h-[37px] pl-2 pr-2 rounded-lg hover:bg-green-600">
+              <button
+                className="bg-green-500 h-[37px] pl-2 pr-2 rounded-lg hover:bg-green-600"
+                onClick={() => {
+                  openModal(1);
+                }}
+              >
                 Agregar Correo electronico
               </button>
             </div>
