@@ -4,9 +4,8 @@ import { useEffect } from "react";
 import { getCompanyEmails } from "../services/CompanyEmailsService";
 import { getCompanyPhones } from "../services/CompanyPhonesService";
 import { BsX } from "react-icons/bs";
-import { PhonesInput } from "./PhonesInput";
-import { RegisterPhonesList } from './RegisterPhonesList'; 
 import { savePhones } from "../services/CompanyPhonesService";
+import { ModalAddPhones } from "./ModalAddPhones";
 
 export const MyCompany = () => {
   const { userAuth, token } = useContext(GeneralContext);
@@ -31,22 +30,26 @@ export const MyCompany = () => {
     getData();
   }, [token, userAuth]);
 
-  const handleActionClick = () => {
+  const openModal = () => {
     setModalVisible(true);
   };
 
-  const addPhone = (phone) => {
-      setPhonesAdd([...phonesAdd, phone]);
-  }
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
-  const deletePhone = (index) => {
+  const addPhone = (phone) => {
+    setPhonesAdd([...phonesAdd, phone]);
+  };
+
+  const deletePhoneAdd = (index) => {
     const newPhonesAdd = phonesAdd.filter((phone, i) => i !== index);
     setPhonesAdd(newPhonesAdd);
-  }
+  };
 
   const handleAddPhones = async () => {
     try {
-      if(phonesAdd.length !== 0) {
+      if (phonesAdd.length !== 0) {
         setModalVisible(false);
         await savePhones(phonesAdd, userAuth.id);
         setPhonesAdd([]);
@@ -70,24 +73,13 @@ export const MyCompany = () => {
         <section className="companyInfo bg-gray-800 w-[95%] rounded-lg h-auto pl-5 pr-5 pb-7 text-white">
           {modalVisible ? (
             <div className="succesContainer fixed top-0 left-0 w-full h-full flex justify-center items-center z-40 bg-black bg-opacity-50 p-4">
-              <div className="modal bg-gray-800 w-[30%] flex flex-col justify-center items-center p-3 rounded-lg z-50">
-                <div className="cl w-[100%] flex justify-end">
-                  <button onClick={() => setModalVisible(false)}>
-                    <BsX className="text-3xl" />
-                  </button>
-                </div>
-                <div className="modalContent w-[73%] flex flex-col gap-4">
-                  <div className="input">
-                    <PhonesInput onAddPhone={addPhone}/>
-                  </div>
-                  <div className="listPhones">
-                    <RegisterPhonesList phones={phonesAdd} onDeletePhone={deletePhone}/>
-                  </div>
-                  <div className="buton flex justify-center items-center">
-                    <button className="bg-blue-800 p-1 rounded-lg pl-2 pr-2 hover:bg-blue-900" onClick={handleAddPhones}>Agregar telefonos</button>
-                  </div>
-                </div>
-              </div>
+              <ModalAddPhones
+                onCloseModal={closeModal}
+                onAddPhone={addPhone}
+                onDeletePhone={deletePhoneAdd}
+                phonesAdd={phonesAdd}
+                onSavePhones={handleAddPhones}
+              />
             </div>
           ) : null}
           <article className="title flex items-center h-28 justify-between">
@@ -97,7 +89,7 @@ export const MyCompany = () => {
             <div className="actions w-[50%] flex justify-around h-[100%] items-center">
               <button
                 className="bg-green-500 h-[37px] pl-2 pr-2 rounded-lg hover:bg-green-600"
-                onClick={handleActionClick}
+                onClick={openModal}
               >
                 Agregar Telefono
               </button>
