@@ -6,6 +6,7 @@ use App\Http\Controllers\CompanyPhoneController;
 use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\LegalFormsController;
 use App\Http\Controllers\UserController;
+use App\Models\Company_phone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/getEmails/{user_id}', [CompanyEmailController::class, 'getEmails']);
     Route::get('/getPhones/{user_id}', [CompanyPhoneController::class, 'getPhones']);
+    Route::delete('/deletePhone/{company_phone}', [CompanyPhoneController::class, 'destroy']);
+    Route::delete('/deleteEmail/{company_email}', [CompanyEmailController::class, 'destroy']);
 });

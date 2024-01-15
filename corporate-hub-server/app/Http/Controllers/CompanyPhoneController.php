@@ -35,4 +35,9 @@ class CompanyPhoneController extends Controller
             ], 200);
         }
     }
+
+    public function destroy(Company_phone $company_phone) :JsonResponse {
+        $company_phone->delete();
+        return response()->json(204);
+    }
 }

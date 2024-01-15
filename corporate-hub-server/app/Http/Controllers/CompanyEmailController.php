@@ -35,4 +35,11 @@ class CompanyEmailController extends Controller
             ], 200);
         }
     }
+
+    public function destroy(Company_email $company_email) {
+
+        $company_email->delete();
+
+        return response()->json(204);
+    }
 }
