@@ -14,6 +14,7 @@ import { BsX } from "react-icons/bs";
 import { savePhones } from "../services/CompanyPhonesService";
 import { ModalAddPhones } from "./ModalAddPhones";
 import { ModalAddEmails } from "./ModalAddEmails";
+import ContentEditable from "react-contenteditable";
 
 export const MyCompany = () => {
   const { userAuth, token } = useContext(GeneralContext);
@@ -25,6 +26,11 @@ export const MyCompany = () => {
   const [modalOpen, setModalOpen] = useState(0);
   const [phonesAdd, setPhonesAdd] = useState([]);
   const [emailsAdd, setEmailsAdd] = useState([]);
+  const [btnActions, setbtnActions] = useState(false);
+
+  const [companyDescription, setCompanyDescription] = useState(
+    userAuth.description
+  );
 
   useEffect(() => {
     const getData = async () => {
@@ -122,6 +128,23 @@ export const MyCompany = () => {
     } catch (error) {
       alert("an error ocurred");
     }
+  };
+
+  const handleDescriptionChange = (e) => {
+    setCompanyDescription(e.target.value);
+  };
+
+  const hanldeFocusDesc = () => {
+    setbtnActions(true);
+  };
+
+  const handleBlurDesc = () => {
+    setbtnActions(false);
+  };
+
+  const handleCancelSaveDesc = () => {
+    console.log("clicked");
+    setCompanyDescription(userAuth.description);
   };
 
   return (
@@ -277,7 +300,26 @@ export const MyCompany = () => {
                 <h1 className="font-bold">Acerca De</h1>
               </div>
               <div className="value w-[80%]">
-                <h2>{userAuth.description}</h2>
+                <ContentEditable
+                  html={companyDescription}
+                  onChange={handleDescriptionChange}
+                  onFocus={hanldeFocusDesc}
+                  onBlur={handleBlurDesc}
+                  className="focus:outline-blue-800 focus:border-none"
+                />
+                {btnActions ? (
+                  <div className="actionsBtn mt-5 flex gap-4">
+                    <button className="bg-blue-800 w-24 h-8 rounded-lg">
+                      Guardar
+                    </button>
+                    <button
+                      className="bg-gray-700 w-24 h-8 rounded-lg"
+                      onMouseDown={handleCancelSaveDesc}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                ) : null}
               </div>
             </div>
           </article>
