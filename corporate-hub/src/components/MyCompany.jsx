@@ -15,6 +15,7 @@ import { savePhones } from "../services/CompanyPhonesService";
 import { ModalAddPhones } from "./ModalAddPhones";
 import { ModalAddEmails } from "./ModalAddEmails";
 import ContentEditable from "react-contenteditable";
+import { updateDescription } from "../services/UserService";
 
 export const MyCompany = () => {
   const { userAuth, token } = useContext(GeneralContext);
@@ -144,8 +145,17 @@ export const MyCompany = () => {
 
   const handleCancelSaveDesc = () => {
     console.log("clicked");
-    setCompanyDescription(userAuth.description);
+    setCompanyDescription(() => companyDescription);
   };
+
+  const updateUserDescription = async () => {
+    try {
+      const response = await updateDescription(token, companyDescription, userAuth.id);
+      return response;
+    } catch (error) {
+      alert('an error ocurred');
+    }
+  }
 
   return (
     <section className="">
@@ -309,7 +319,7 @@ export const MyCompany = () => {
                 />
                 {btnActions ? (
                   <div className="actionsBtn mt-5 flex gap-4">
-                    <button className="bg-blue-800 w-24 h-8 rounded-lg">
+                    <button className="bg-blue-800 w-24 h-8 rounded-lg" onMouseDown={updateUserDescription}>
                       Guardar
                     </button>
                     <button
