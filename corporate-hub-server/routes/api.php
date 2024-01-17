@@ -24,4 +24,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/getPhones/{user_id}', [CompanyPhoneController::class, 'getPhones']);
     Route::delete('/deletePhone/{company_phone}', [CompanyPhoneController::class, 'destroy']);
     Route::delete('/deleteEmail/{company_email}', [CompanyEmailController::class, 'destroy']);
+    Route::patch('/update-description/{user}', [UserController::class, 'updateDescription']);
 });

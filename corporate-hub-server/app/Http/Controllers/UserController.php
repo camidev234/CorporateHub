@@ -33,4 +33,14 @@ class UserController extends Controller
             'data' => $data
         ], 201);
     }
+
+    public function updateDescription(User $user, Request $request) :JsonResponse {
+        $user->description = $request->description;
+
+        $user->save();
+
+        return response()->json([
+            'success' => 'user description updated successfully'
+        ], 201);
+    }
 }
