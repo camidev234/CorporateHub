@@ -79,9 +79,9 @@ export const MyCompany = () => {
     try {
       if (phonesAdd.length !== 0) {
         setModalVisible(false);
+        setIsLoading(true);
         await savePhones(phonesAdd, userAuth.id);
         setPhonesAdd([]);
-        setIsLoading(true);
         const responsePhones = await getCompanyPhones(token, userAuth.id);
         setPhones(responsePhones);
         setIsLoading(false);
@@ -95,9 +95,9 @@ export const MyCompany = () => {
     try {
       if (emailsAdd.length !== 0) {
         setModalVisible(false);
+        setIsLoading(true);
         await saveEmails(emailsAdd, userAuth.id);
         setEmailsAdd([]);
-        setIsLoading(true);
         const responseEmails = await getCompanyEmails(token, userAuth.id);
         setEmails(responseEmails);
         setIsLoading(false);
@@ -150,17 +150,21 @@ export const MyCompany = () => {
 
   const updateUserDescription = async () => {
     try {
-      const response = await updateDescription(token, companyDescription, userAuth.id);
+      const response = await updateDescription(
+        token,
+        companyDescription,
+        userAuth.id
+      );
       return response;
     } catch (error) {
-      alert('an error ocurred');
+      alert("an error ocurred");
     }
-  }
+  };
 
   return (
-    <section className="">
+    <section className="w-[87%]">
       {isLoading ? (
-        <div className="bg-green-500 h-[400px] flex justify-center items-center">
+        <div className=" h-[400px] flex justify-center items-center">
           <div className="spinner"></div>
         </div>
       ) : (
@@ -235,52 +239,56 @@ export const MyCompany = () => {
                 <h2>{userAuth.address}</h2>
               </div>
             </div>
-            <div className="flex border-b border-solid border-gray-600 pb-3">
-              <div className="key w-[20%]">
-                <h1 className="font-bold">Telefonos</h1>
-              </div>
-              <div className="value w-[80%] flex flex-col gap-2 items-start">
-                {phones.map((phone) => {
-                  return (
-                    <div
-                      className="gap-2 bg-gray-700 p-1 flex rounded-lg"
-                      key={phone.id}
-                    >
-                      <h2>{phone.phone}</h2>
-                      <button
-                        className="bg-gray-600 rounded-full"
-                        onClick={() => handleDeletePhone(phone.id)}
+            {phones !== undefined ? (
+              <div className="flex border-b border-solid border-gray-600 pb-3">
+                <div className="key w-[20%]">
+                  <h1 className="font-bold">Telefonos</h1>
+                </div>
+                <div className="value w-[80%] flex flex-col gap-2 items-start">
+                  {phones.map((phone) => {
+                    return (
+                      <div
+                        className="gap-2 bg-gray-700 p-1 flex rounded-lg"
+                        key={phone.id}
                       >
-                        <BsX />
-                      </button>
-                    </div>
-                  );
-                })}
+                        <h2>{phone.phone}</h2>
+                        <button
+                          className="bg-gray-600 rounded-full"
+                          onClick={() => handleDeletePhone(phone.id)}
+                        >
+                          <BsX />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-            <div className="flex border-b border-solid border-gray-600 pb-3">
-              <div className="key w-[20%]">
-                <h1 className="font-bold">Correo Electronico</h1>
-              </div>
-              <div className="value w-[80%] flex flex-col gap-2 items-start">
-                {emails.map((email) => {
-                  return (
-                    <div
-                      className="gap-2 bg-gray-700 p-1 flex rounded-lg"
-                      key={email.id}
-                    >
-                      <h2>{email.email}</h2>
-                      <button
-                        className=" rounded-full"
-                        onClick={() => handleDeleteEmail(email.id)}
+            ) : null}
+            {emails !== undefined ? (
+              <div className="flex border-b border-solid border-gray-600 pb-3">
+                <div className="key w-[20%]">
+                  <h1 className="font-bold">Correo Electronico</h1>
+                </div>
+                <div className="value w-[80%] flex flex-col gap-2 items-start">
+                  {emails.map((email) => {
+                    return (
+                      <div
+                        className="gap-2 bg-gray-700 p-1 flex rounded-lg"
+                        key={email.id}
                       >
-                        <BsX className="" />
-                      </button>
-                    </div>
-                  );
-                })}
+                        <h2>{email.email}</h2>
+                        <button
+                          className=" rounded-full"
+                          onClick={() => handleDeleteEmail(email.id)}
+                        >
+                          <BsX className="" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            ) : null}
             <div className="flex border-b border-solid border-gray-600 pb-3">
               <div className="key w-[20%]">
                 <h1 className="font-bold">Nit</h1>
@@ -319,7 +327,10 @@ export const MyCompany = () => {
                 />
                 {btnActions ? (
                   <div className="actionsBtn mt-5 flex gap-4">
-                    <button className="bg-blue-800 w-24 h-8 rounded-lg" onMouseDown={updateUserDescription}>
+                    <button
+                      className="bg-blue-800 w-24 h-8 rounded-lg"
+                      onMouseDown={updateUserDescription}
+                    >
                       Guardar
                     </button>
                     <button
