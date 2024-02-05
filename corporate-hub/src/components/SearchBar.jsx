@@ -41,7 +41,7 @@ export const SearchBar = () => {
       >
         <input
           type="search"
-          placeholder="Busca por nombre de la empresa"
+          placeholder="Busca por nombre de la empresa o nit"
           className="w-[80%] h-[100%] rounded-lg bg-transparent border border-solid border-#eee pl-2 text-white
           focus:outline-none border-gray-300 hover:border-blue-400"
           onChange={handleChange}

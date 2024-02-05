@@ -23,6 +23,7 @@ export const RegisterUser = () => {
   const [phones, setPhones] = useState([]);
   const [emails, setEmails] = useState([]);
   const [send, setSend] = useState(false);
+  const [descriptionLength, setDescriptionLength] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
 
   const [user, setUser] = useState({
@@ -93,6 +94,7 @@ export const RegisterUser = () => {
 
   const handleDescriptionChange = (e) => {
     setUser({ ...user, description: e.target.value });
+    setDescriptionLength(e.target.value.length);
   };
 
   const handleActivityChange = (e) => {
@@ -163,6 +165,11 @@ export const RegisterUser = () => {
           className=" h-[2.3em] bg-transparent border-b border-solid border-gray-500 pb-2 outline-none
           text-white focus:border-b focus:border-solid focus:border-white"
         ></textarea>
+        <div className="leng text-xs">
+          <span className={
+            descriptionLength > 900 ? "text-red-500" : "text-white"
+          }>{descriptionLength}/900</span>
+        </div>
         <input
           type="text"
           placeholder="Actividad principal"
