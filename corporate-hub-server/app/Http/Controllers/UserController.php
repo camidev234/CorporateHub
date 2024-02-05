@@ -43,4 +43,22 @@ class UserController extends Controller
             'success' => 'user description updated successfully'
         ], 201);
     }
+
+    public function searchCompany($searchWord) :JsonResponse {
+
+        $list = User::where('company_name', 'like', '%' . $searchWord . '%')
+                ->orWhere('company_nit', 'like', '%' . $searchWord . '%')
+                ->get();
+
+        if($list->isEmpty()) {
+            return response()->json([
+                'success' => 'no results found'
+            ], 404);
+        }
+
+        return response()->json([
+           'companies' => $list 
+        ], 200);
+
+    }
 }
