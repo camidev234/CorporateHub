@@ -42,12 +42,12 @@ export const RegisterUser = () => {
       setSend(true);
       const response = await createUser(user);
       setSend(false);
-      if(response.status == 201){
+      if (response.status == 201) {
         setIsSaved(true);
-        if(emails.length !== 0){
+        if (emails.length !== 0) {
           await saveEmails(emails, response.data.data.user.id);
         }
-        if(phones.length !== 0){
+        if (phones.length !== 0) {
           await savePhones(phones, response.data.data.user.id);
         }
         setTimeout(() => {
@@ -58,8 +58,8 @@ export const RegisterUser = () => {
         setIsSaved(false);
       }
     } catch (error) {
-        alert('Internal server error');
-    } 
+      alert('Internal server error');
+    }
   }
 
   const handlePhoneClick = (phone) => {
@@ -116,10 +116,10 @@ export const RegisterUser = () => {
   return (
     <section className="registerUser w-full h-auto flex justify-center items-center mb-20 z-10">
       {
-        send ? <SavingAlert isSend={send}/> : null
+        send ? <SavingAlert isSend={send} /> : null
       }
       {
-        isSaved ? <SuccesAlert/> : null
+        isSaved ? <SuccesAlert /> : null
       }
       <form
         action=""
@@ -180,7 +180,7 @@ export const RegisterUser = () => {
           text-white focus:border-b focus:border-solid focus:border-white"
         />
         <div className="select-legal-form">
-          <SelectLegalForm onSelectForm={handleSelectForm}/>
+          <SelectLegalForm onSelectForm={handleSelectForm} />
         </div>
         <input
           type="password"
@@ -203,7 +203,7 @@ export const RegisterUser = () => {
           <RegisterEmailsList onDeleteEmail={deleteEmail} emails={emails} />
         </div>
         <button className="bg-blue-800 rounded-lg h-[2em] text-white hover:bg-orange-500 mt-4"
-        onClick={saveUser}
+          onClick={saveUser}
         >
           Registrar Empresa
         </button>
