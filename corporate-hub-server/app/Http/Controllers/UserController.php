@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function store(UserRequest $request) :JsonResponse {
+    public function store(UserRequest $request): JsonResponse
+    {
         $newUser = new User();
 
         $newUser->company_name = $request->company_name;
@@ -34,7 +35,8 @@ class UserController extends Controller
         ], 201);
     }
 
-    public function updateDescription(User $user, Request $request) :JsonResponse {
+    public function updateDescription(User $user, Request $request): JsonResponse
+    {
         $user->description = $request->description;
 
         $user->save();
@@ -44,21 +46,47 @@ class UserController extends Controller
         ], 201);
     }
 
-    public function searchCompany($searchWord) :JsonResponse {
+    public function searchCompany($searchWord): JsonResponse
+    {
 
         $list = User::where('company_name', 'like', '%' . $searchWord . '%')
-                ->orWhere('company_nit', 'like', '%' . $searchWord . '%')
-                ->get();
+            ->orWhere('company_nit', 'like', '%' . $searchWord . '%')
+            ->get();
 
-        if($list->isEmpty()) {
+        if ($list->isEmpty()) {
             return response()->json([
                 'success' => 'no results found'
             ], 404);
         }
 
         return response()->json([
-           'companies' => $list 
+            'companies' => $list
         ], 200);
+    }
 
+    public function findUser(User $user): JsonResponse
+    {
+
+        $data = [
+            'user' => [
+                'id' => $user->id,
+                'company_name' => $user->company_name,
+                'company_nit' => $user->company_nit,
+                'address' => $user->address,
+                'principal_activity' => $user->principal_activity,
+                'description' => $user->description,
+                'country' => [
+                    'country_name' => $user->country->country_name,
+                ],
+                'legal_form' => [
+                    'legal_form' => $user->legal_form->legal_form
+                ],
+                'score' => $user->score
+            ]
+            ];
+
+        return response()->json([
+            'userFind' => $data
+        ]);
     }
 }

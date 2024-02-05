@@ -16,6 +16,7 @@ Route::get('/corporate-hub/get-legal-forms', [LegalFormsController::class, 'getA
 Route::post('/corporate-hub/save-email/{email}/{user_id}', [CompanyEmailController::class, 'store']);
 Route::post('/corporate-hub/save-phone/{phone}/{user_id}', [CompanyPhoneController::class, 'store']);
 Route::get('/search-company/{searchWord}', [UserController::class, 'searchCompany']);
+Route::get('/corporate-hub/get-user/{user}', [UserController::class, 'findUser']);
 
 Route::post('/corporate-hub/login', [AuthController::class, 'login']);
 
