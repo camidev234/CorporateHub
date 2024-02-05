@@ -1,13 +1,28 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { BsSearch } from "react-icons/bs";
+import { findUser } from "../services/UserService";
+import { GeneralContext } from "../context/GeneralContext";
+import { useNavigate } from "react-router-dom";
 
 export const SearchBar = () => {
 
+  const { updateCompaniesFind } = useContext(GeneralContext);
+
   const [searchValue, setSearchValue] = useState("");
 
-  const handleSearch = () => {
-    if(!searchValue.length == 0) {
-      console.log("hello");
+  const navigate = useNavigate();
+
+  const handleSearch = async () => {
+    try {
+      if (!searchValue.length == 0) {
+        const response = await findUser(searchValue);
+        if (response.status === 200) {
+          updateCompaniesFind(response.data.companies);
+          navigate('/company-list');
+        }
+      }
+    } catch (error) {
+      alert('No se encontraron empresas');
     }
   };
 

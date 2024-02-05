@@ -10,6 +10,7 @@ import { BarNavAuth } from "./BarNavAuth";
 import { DashboardPage } from "../pages/DashboardPage";
 import { MyCompany } from "./MyCompany";
 import { AuthChecker } from "./AuthChecker";
+import { CompanyList } from "./CompanyList";
 
 function App() {
   const { token, isAuth } = useContext(GeneralContext);
@@ -41,6 +42,7 @@ function App() {
             }
           />
         </Route>
+        <Route path="/company-list" element={<CompanyList/>} />
       </Routes>
     </div>
   );

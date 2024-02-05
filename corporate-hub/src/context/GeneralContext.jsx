@@ -12,6 +12,8 @@ export const  GeneralContextProvider = (props) => {
 
     const [ companyName, setCompanyName ] = useState("");
 
+    const [searchResults, setSearchResults] = useState([]);
+
     const login = (token) => {
         setAuthToken(token);
         setIsAuth(true);
@@ -28,7 +30,11 @@ export const  GeneralContextProvider = (props) => {
 
     const getUserAuthInfo = (user) => {
         setUserAuth(user);
-    }
+    };
+
+    const updateCompaniesFind = (companies) => {
+        setSearchResults(companies);
+    };
 
     return (
         <GeneralContext.Provider 
@@ -40,7 +46,9 @@ export const  GeneralContextProvider = (props) => {
                 onGetCompanyName: getCompanyName,
                 companyName,
                 onGetUserAuthInfo: getUserAuthInfo,
-                userAuth
+                userAuth,
+                searchResults,
+                updateCompaniesFind
             }}
         >
             {props.children}
