@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('principal_activity', 90);
             $table->foreignId('legal_form_id')->references('id')->on('legal_forms');
             $table->string('password', 130);
+            $table->unsignedBigInteger('score')->default(0)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
