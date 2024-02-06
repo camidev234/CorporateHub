@@ -11,6 +11,7 @@ import { DashboardPage } from "../pages/DashboardPage";
 import { MyCompany } from "./MyCompany";
 import { AuthChecker } from "./AuthChecker";
 import { CompanyList } from "./CompanyList";
+import { CompanyInfo } from "./CompanyInfo";
 
 function App() {
   const { token, isAuth } = useContext(GeneralContext);
@@ -43,6 +44,7 @@ function App() {
           />
         </Route>
         <Route path="/company-list" element={<CompanyList/>} />
+        <Route path="/company/:company_id" element={<CompanyInfo />} />
       </Routes>
     </div>
   );

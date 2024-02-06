@@ -41,10 +41,21 @@ export const findUser = async (searchWord) => {
     try {
         const url = `http://127.0.0.1:8000/api/search-company/${searchWord}`;
         const response = await axios.get(url)
-        console.log(response.data);
         return response;
     } catch (error) {
         console.error(error);
         throw error;
     }
 };
+
+
+export const findUserById = async (id) => {
+    try {
+        const url = `http://127.0.0.1:8000/api/corporate-hub/get-user/${id}`;
+        const response = await axios.get(url)
+        return response;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}

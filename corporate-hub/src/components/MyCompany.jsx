@@ -36,9 +36,9 @@ export const MyCompany = () => {
   useEffect(() => {
     const getData = async () => {
       setIsLoading(true);
-      const responseEmails = await getCompanyEmails(token, userAuth.id);
+      const responseEmails = await getCompanyEmails(userAuth.id);
       setEmails(responseEmails);
-      const responsePhones = await getCompanyPhones(token, userAuth.id);
+      const responsePhones = await getCompanyPhones(userAuth.id);
       console.log(responsePhones);
       setPhones(responsePhones);
       setIsLoading(false);
@@ -82,7 +82,7 @@ export const MyCompany = () => {
         setIsLoading(true);
         await savePhones(phonesAdd, userAuth.id);
         setPhonesAdd([]);
-        const responsePhones = await getCompanyPhones(token, userAuth.id);
+        const responsePhones = await getCompanyPhones(userAuth.id);
         setPhones(responsePhones);
         setIsLoading(false);
       }
@@ -98,7 +98,7 @@ export const MyCompany = () => {
         setIsLoading(true);
         await saveEmails(emailsAdd, userAuth.id);
         setEmailsAdd([]);
-        const responseEmails = await getCompanyEmails(token, userAuth.id);
+        const responseEmails = await getCompanyEmails(userAuth.id);
         setEmails(responseEmails);
         setIsLoading(false);
       }

@@ -76,12 +76,14 @@ class UserController extends Controller
                 'principal_activity' => $user->principal_activity,
                 'description' => $user->description,
                 'country' => [
+                    'id' => $user->country->id,
                     'country_name' => $user->country->country_name,
                 ],
                 'legal_form' => [
                     'legal_form' => $user->legal_form->legal_form
                 ],
-                'score' => $user->score
+                'score' => $user->score,
+                'description' => $user->description
             ]
             ];
 

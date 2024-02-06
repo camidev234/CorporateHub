@@ -17,13 +17,13 @@ Route::post('/corporate-hub/save-email/{email}/{user_id}', [CompanyEmailControll
 Route::post('/corporate-hub/save-phone/{phone}/{user_id}', [CompanyPhoneController::class, 'store']);
 Route::get('/search-company/{searchWord}', [UserController::class, 'searchCompany']);
 Route::get('/corporate-hub/get-user/{user}', [UserController::class, 'findUser']);
+Route::get('/getEmails/{user_id}', [CompanyEmailController::class, 'getEmails']);
+Route::get('/getPhones/{user_id}', [CompanyPhoneController::class, 'getPhones']);
 
 Route::post('/corporate-hub/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/getEmails/{user_id}', [CompanyEmailController::class, 'getEmails']);
-    Route::get('/getPhones/{user_id}', [CompanyPhoneController::class, 'getPhones']);
     Route::delete('/deletePhone/{company_phone}', [CompanyPhoneController::class, 'destroy']);
     Route::delete('/deleteEmail/{company_email}', [CompanyEmailController::class, 'destroy']);
     Route::patch('/update-description/{user}', [UserController::class, 'updateDescription']);

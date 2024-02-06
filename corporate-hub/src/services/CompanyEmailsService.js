@@ -16,14 +16,10 @@ export const saveEmails = async (emails, user_id) => {
   }
 };
 
-export const getCompanyEmails = async (token, user_id) => {
+export const getCompanyEmails = async (user_id) => {
   try {
     const url = `http://127.0.0.1:8000/api/getEmails/${user_id}`;
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    const response = await axios.get(url);
 
     if(response.status === 200) {
       return response.data.emails;

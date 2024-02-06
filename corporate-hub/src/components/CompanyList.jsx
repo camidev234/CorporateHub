@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { GeneralContext } from "../context/GeneralContext";
 import { BsEyeFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -6,7 +6,7 @@ import { BsStar, BsStarFill } from "react-icons/bs";
 
 export const CompanyList = () => {
   const { searchResults } = useContext(GeneralContext);
-  const [stars, setStars] = useState([1, 2, 3, 4, 5]);
+  const stars = [1, 2, 3, 4, 5];
 
   return (
     <div className="text-white">
@@ -16,7 +16,7 @@ export const CompanyList = () => {
       <section className="list w-full pt-12 pb-12 flex justify-center items-center h-auto">
         <div className="co bg-gray-800 w-[50%] rounded-md p-4 flex flex-col shadow-md">
           {searchResults.map((company) => (
-            <Link to={`/company/${company._id}`} key={company._id}>
+            <Link to={`/company/${company.id}`} key={company.id}>
               <article
                 className="company mb-1 border-b border-gray-700 pt-2 pb-2 flex justify-between"
                 key={company.id}

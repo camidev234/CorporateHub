@@ -17,14 +17,10 @@ export const savePhones = async (phones, user_id) => {
   }
 };
 
-export const getCompanyPhones = async (token, user_id) => {
+export const getCompanyPhones = async (user_id) => {
   try {
     const url = `http://127.0.0.1:8000/api/getPhones/${user_id}`;
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+    const response = await axios.get(url)
 
     if(response.status === 200) {
       return response.data.phones;
