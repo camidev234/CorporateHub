@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { findUserById } from "../services/UserService";
 import { getCompanyPhones } from "../services/CompanyPhonesService";
 import { getCompanyEmails } from "../services/CompanyEmailsService";
+import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 
 export const CompanyInfo = () => {
   const { company_id } = useParams();
@@ -11,6 +12,7 @@ export const CompanyInfo = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [phones, setPhones] = useState([]);
   const [emails, setEmails] = useState([]);
+  const [showComments, setShowComments] = useState(false);
 
   useEffect(() => {
     const getCompanyInfo = async () => {
@@ -31,11 +33,14 @@ export const CompanyInfo = () => {
   }, [company_id]);
 
   return isLoading ? (
-    <section>
+    <section className="w-full h-[50vh] flex justify-center items-center">
       <div className="spinner"></div>
+      <div className="mt-20 text-white">
+        <span>Cargando informacion...</span>
+      </div>
     </section>
   ) : (
-    <section className="companyInfo bg-gray-800 w-[95%] rounded-lg h-auto pl-5 pr-5 pb-7 text-white m-auto mt-5">
+    <section className="companyInfo bg-gray-800 w-[95%] rounded-lg h-auto pl-5 pr-5 pb-7 text-white m-auto mt-5 mb-7s">
       <article className="title flex items-center h-28 justify-between">
         <div className="w-[40%]">
           <h1 className="text-2xl">{companyInfo.company_name}</h1>
@@ -74,10 +79,7 @@ export const CompanyInfo = () => {
             <div className="value w-[80%] flex flex-col gap-2 items-start">
               {phones.map((phone) => {
                 return (
-                  <div
-                    className="gap-2 p-1 flex rounded-lg"
-                    key={phone.id}
-                  >
+                  <div className="gap-2 p-1 flex rounded-lg" key={phone.id}>
                     <h2>{phone.phone}</h2>
                   </div>
                 );
@@ -93,10 +95,7 @@ export const CompanyInfo = () => {
             <div className="value w-[80%] flex flex-col gap-2 items-start">
               {emails.map((email) => {
                 return (
-                  <div
-                    className="gap-2 p-1 flex rounded-lg"
-                    key={email.id}
-                  >
+                  <div className="gap-2 p-1 flex rounded-lg" key={email.id}>
                     <h2>{email.email}</h2>
                   </div>
                 );
@@ -136,6 +135,17 @@ export const CompanyInfo = () => {
             <p>{companyInfo.description}</p>
           </div>
         </div>
+      </article>
+      <article className="comments mt-16 font-bold text-xl">
+        <div onMouseDown={() => setShowComments(!showComments)} className="flex justify-between">
+          <h1>Ver Comentarios</h1>
+          <span>{showComments ? <BsChevronUp /> : <BsChevronDown />}</span>
+        </div>
+        {showComments ? (
+          <div>
+            <h1>Comentarios</h1>
+          </div>
+        ) : null}
       </article>
     </section>
   );
