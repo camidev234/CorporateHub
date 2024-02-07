@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import { findUserById } from "../services/UserService";
 import { getCompanyPhones } from "../services/CompanyPhonesService";
 import { getCompanyEmails } from "../services/CompanyEmailsService";
-import { BsChevronDown, BsChevronUp } from "react-icons/bs";
-
+import { BsChevronDown, BsChevronUp, BsStar, BsStarFill } from "react-icons/bs";
 export const CompanyInfo = () => {
   const { company_id } = useParams();
 
@@ -13,6 +12,7 @@ export const CompanyInfo = () => {
   const [phones, setPhones] = useState([]);
   const [emails, setEmails] = useState([]);
   const [showComments, setShowComments] = useState(false);
+  const stars = [1, 2, 3, 4, 5];
 
   useEffect(() => {
     const getCompanyInfo = async () => {
@@ -136,14 +136,44 @@ export const CompanyInfo = () => {
           </div>
         </div>
       </article>
-      <article className="comments mt-16 font-bold text-xl">
-        <div onMouseDown={() => setShowComments(!showComments)} className="flex justify-between">
-          <h1>Ver Comentarios</h1>
+      <article className="comments mt-16 text-xl">
+        <div
+          onMouseDown={() => setShowComments(!showComments)}
+          className="flex justify-between"
+        >
+          <h1 className="font-bold">Ver Comentarios</h1>
           <span>{showComments ? <BsChevronUp /> : <BsChevronDown />}</span>
         </div>
         {showComments ? (
-          <div>
-            <h1>Comentarios</h1>
+          <div className="mt-4 bg-orange-500">
+            <div className="flex justify-between">
+              <div className="cont flex gap-3">
+                <span className="flex justify-center items-center">
+                  <h1>Comentarios</h1>
+                </span>
+                <span className="flex justify-center items-center gap-1">
+                  {companyInfo.score}
+                  {stars.map((star, index) => {
+                    if (star <= companyInfo.score) {
+                      return (
+                        <BsStarFill
+                          key={index}
+                          className="text-yellow-500 text-xs"
+                        />
+                      );
+                    } else {
+                      return <BsStar key={index} className=" text-md" />;
+                    }
+                  })}
+                </span>
+              </div>
+              <button className="bg-blue-600 rounded-md pt-1 pb-2 pl-3 pr-3">
+                Agregar Reseña
+              </button>
+            </div>
+            <div className="bg-gray-200 animate-pulse rounded-lg p-4">
+                
+            </div>
           </div>
         ) : null}
       </article>

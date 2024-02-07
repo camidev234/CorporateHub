@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CompanyEmailController;
 use App\Http\Controllers\CompanyPhoneController;
 use App\Http\Controllers\CountriesController;
@@ -19,6 +20,8 @@ Route::get('/search-company/{searchWord}', [UserController::class, 'searchCompan
 Route::get('/corporate-hub/get-user/{user}', [UserController::class, 'findUser']);
 Route::get('/getEmails/{user_id}', [CompanyEmailController::class, 'getEmails']);
 Route::get('/getPhones/{user_id}', [CompanyPhoneController::class, 'getPhones']);
+Route::post('/corporate-hub/save-comment', [CommentController::class, 'store']);
+Route::get('/corporate-hub/get-user-comments/{user}', [CommentController::class, 'getUserComments']);
 
 Route::post('/corporate-hub/login', [AuthController::class, 'login']);
 
