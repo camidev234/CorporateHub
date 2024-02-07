@@ -5,6 +5,7 @@ import { getCompanyPhones } from "../services/CompanyPhonesService";
 import { getCompanyEmails } from "../services/CompanyEmailsService";
 import { BsChevronDown, BsChevronUp, BsStar, BsStarFill } from "react-icons/bs";
 import { ShowComments } from "./ShowComments";
+import { ModalComment } from "./ModalComment";
 export const CompanyInfo = () => {
   const { company_id } = useParams();
 
@@ -13,6 +14,7 @@ export const CompanyInfo = () => {
   const [phones, setPhones] = useState([]);
   const [emails, setEmails] = useState([]);
   const [showComments, setShowComments] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const stars = [1, 2, 3, 4, 5];
 
   useEffect(() => {
@@ -35,7 +37,15 @@ export const CompanyInfo = () => {
 
   const toggleComments = () => {
     setShowComments(!showComments)
-  }
+  };
+
+  const handleModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
 
   return isLoading ? (
     <section className="w-full h-[50vh] flex justify-center items-center">
@@ -46,6 +56,13 @@ export const CompanyInfo = () => {
     </section>
   ) : (
     <section className="companyInfo bg-gray-800 w-[95%] rounded-lg h-auto pl-5 pr-5 pb-7 text-white m-auto mt-5 mb-7s">
+      {
+        modalVisible ? (
+          <section className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-gray-900 opacity-90">
+            <ModalComment onCloseModal={closeModal}/>
+          </section>
+        ) : null
+      }
       <article className="title flex items-center h-28 justify-between">
         <div className="w-[40%]">
           <h1 className="text-2xl">{companyInfo.company_name}</h1>
@@ -172,7 +189,7 @@ export const CompanyInfo = () => {
                   })}
                 </span>
               </div>
-              <button className="bg-blue-600 rounded-md pt-1 pb-2 pl-3 pr-3">
+              <button className="bg-blue-600 rounded-md pt-1 pb-2 pl-3 pr-3" onClick={handleModal}>
                 Agregar Reseña
               </button>
             </div>
