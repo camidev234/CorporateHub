@@ -14,10 +14,11 @@ class CommentController extends Controller
      */
     public function store(Request $request) :JsonResponse {
         $comment = new Comment();
-        
+
         $comment->autor = $request->autor;
         $comment->description = $request->description;
         $comment->user_id = $request->user_id;
+        $comment->score = $request->score;
         $comment->save();
 
         return response()->json([

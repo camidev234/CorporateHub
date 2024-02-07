@@ -4,6 +4,7 @@ import { findUserById } from "../services/UserService";
 import { getCompanyPhones } from "../services/CompanyPhonesService";
 import { getCompanyEmails } from "../services/CompanyEmailsService";
 import { BsChevronDown, BsChevronUp, BsStar, BsStarFill } from "react-icons/bs";
+import { ShowComments } from "./ShowComments";
 export const CompanyInfo = () => {
   const { company_id } = useParams();
 
@@ -31,6 +32,10 @@ export const CompanyInfo = () => {
     };
     getCompanyInfo();
   }, [company_id]);
+
+  const toggleComments = () => {
+    setShowComments(!showComments)
+  }
 
   return isLoading ? (
     <section className="w-full h-[50vh] flex justify-center items-center">
@@ -138,7 +143,7 @@ export const CompanyInfo = () => {
       </article>
       <article className="comments mt-16 text-xl">
         <div
-          onMouseDown={() => setShowComments(!showComments)}
+          onMouseDown={toggleComments}
           className="flex justify-between"
         >
           <h1 className="font-bold">Ver Comentarios</h1>
@@ -171,8 +176,8 @@ export const CompanyInfo = () => {
                 Agregar Reseña
               </button>
             </div>
-            <div className="bg-gray-200 animate-pulse rounded-lg p-4">
-                
+            <div className="comments bg-green-800">
+                <ShowComments company_id={companyInfo.id}/>
             </div>
           </div>
         ) : null}

@@ -7,9 +7,19 @@ export const saveComment = async (comment) => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-      }
+      },
     });
 
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getCompanyComments = (user_id) => {
+  try {
+    const url = `http://127.0.0.1:8000/api/corporate-hub/get-user-comments/${user_id}`;
+    const response = axios.get(url);
     return response;
   } catch (error) {
     console.log(error);

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('autor', 30);
             $table->string('description', 750);
             $table->foreignId('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('score')->default(0);
             $table->timestamps();
         });
     }
