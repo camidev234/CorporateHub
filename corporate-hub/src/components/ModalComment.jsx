@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ModalCommentStars } from "./ModalCommentStars";
 import { FormComment } from "./FormComment";
 
-export const ModalComment = ({ onCloseModal }) => {
+export const ModalComment = ({ onCloseModal, company_id }) => {
   const [stars, setStars] = useState(0);
 
   const [cancelOpinion, setCancelOpinion] = useState(false);
@@ -48,7 +48,7 @@ export const ModalComment = ({ onCloseModal }) => {
           <span>{stars}</span>
         </div>
         <div className="form">
-          <FormComment stars={stars} onCancelOpinion={handleCancelModal} onCloseModal={handleCloseModal}/>
+          <FormComment stars={stars} onCancelOpinion={handleCancelModal} onCloseModal={handleCloseModal} company_id={company_id}/>
         </div>
       </div>
     </div>
@@ -57,4 +57,5 @@ export const ModalComment = ({ onCloseModal }) => {
 
 ModalComment.propTypes = {
   onCloseModal: PropTypes.func.isRequired,
+  company_id: PropTypes.number.isRequired
 };

@@ -36,7 +36,7 @@ export const CompanyInfo = () => {
   }, [company_id]);
 
   const toggleComments = () => {
-    setShowComments(!showComments)
+    setShowComments(!showComments);
   };
 
   const handleModal = () => {
@@ -56,13 +56,11 @@ export const CompanyInfo = () => {
     </section>
   ) : (
     <section className="companyInfo bg-gray-800 w-[62%] mb-6 rounded-lg h-auto pl-5 pr-5 pb-7 text-white m-auto mt-5 mb-7s">
-      {
-        modalVisible ? (
-          <section className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-gray-950 bg-opacity-70">
-            <ModalComment onCloseModal={closeModal}/>
-          </section>
-        ) : null
-      }
+      {modalVisible ? (
+        <section className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-gray-950 bg-opacity-70">
+          <ModalComment onCloseModal={closeModal} company_id={company_id} />
+        </section>
+      ) : null}
       <article className="title flex items-center h-28 justify-between">
         <div className="w-[40%]">
           <h1 className="text-2xl">{companyInfo.company_name}</h1>
@@ -159,10 +157,7 @@ export const CompanyInfo = () => {
         </div>
       </article>
       <article className="comments mt-16 text-xl">
-        <div
-          onMouseDown={toggleComments}
-          className="flex justify-between"
-        >
+        <div onMouseDown={toggleComments} className="flex justify-between">
           <h1 className="font-bold">Ver Comentarios</h1>
           <span>{showComments ? <BsChevronUp /> : <BsChevronDown />}</span>
         </div>
@@ -189,12 +184,15 @@ export const CompanyInfo = () => {
                   })}
                 </span>
               </div>
-              <button className="bg-blue-600 rounded-md pt-1 pb-2 pl-3 pr-3" onClick={handleModal}>
+              <button
+                className="bg-blue-600 rounded-md pt-1 pb-2 pl-3 pr-3"
+                onClick={handleModal}
+              >
                 Agregar Reseña
               </button>
             </div>
             <div className="comments bg-green-800">
-                <ShowComments company_id={companyInfo.id}/>
+              <ShowComments company_id={companyInfo.id} />
             </div>
           </div>
         ) : null}

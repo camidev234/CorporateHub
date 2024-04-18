@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { saveComment } from "../services/CompanyCommentsService";
 
-export const FormComment = ({ stars, onCancelOpinion, onCloseModal }) => {
+export const FormComment = ({ stars, onCancelOpinion, onCloseModal, company_id }) => {
   const [disabled, setDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [opinion, setOpinion] = useState({
     autor: "",
     description: "",
     score: stars,
+    user_id: company_id
   });
 
   const stylesDisabled =
@@ -22,12 +25,15 @@ export const FormComment = ({ stars, onCancelOpinion, onCloseModal }) => {
   };
 
   useEffect(() => {
+    setOpinion(prevOpinion => {
+        return { ...prevOpinion, score: stars };
+      });
     if (stars < 1 || opinion.autor.length === 0) {
       setDisabled(true);
     } else {
       setDisabled(false);
     }
-  }, [stars, opinion.autor]);
+  }, [opinion.autor, stars]);
 
   const cancel = () => {
     if(opinion.description.length == 0 && opinion.autor.length == 0) {
@@ -36,6 +42,17 @@ export const FormComment = ({ stars, onCancelOpinion, onCloseModal }) => {
         onCancelOpinion();
     }
   };
+
+  const handleClickSave = async () => {
+    try {
+        setIsLoading(true);
+        const response = await saveComment(opinion);
+        setIsLoading(false);
+        return response.status;
+    } catch (error) {
+        console.log(error);
+    }
+  }
 
   return (
     <form action="" className="w-[100%] flex flex-col pb-2 pt-2 gap-3" onSubmit={(e) => e.preventDefault()}>
@@ -72,11 +89,18 @@ export const FormComment = ({ stars, onCancelOpinion, onCloseModal }) => {
           className={
             disabled
               ? stylesDisabled
-              : "w-[47%] p-2 rounded-md font-medium bg-blue-800 hover:bg-blue-900"
+              : "w-[47%] p-2 rounded-md font-medium bg-blue-800 hover:bg-blue-900 flex justify-center"
           }
           disabled={stars < 1 ? true : false}
+          onClick={handleClickSave}
         >
-          Publicar Reseña
+          {
+            isLoading ? (
+                <div className="spinner"></div>
+            ) : (
+                'Publicar Reseña'
+            )
+          }
         </button>
       </section>
     </form>
@@ -86,5 +110,6 @@ export const FormComment = ({ stars, onCancelOpinion, onCloseModal }) => {
 FormComment.propTypes = {
   stars: PropTypes.number.isRequired,
   onCancelOpinion: PropTypes.func.isRequired,
-  onCloseModal: PropTypes.func.isRequired
+  onCloseModal: PropTypes.func.isRequired,
+  company_id: PropTypes.string.isRequired
 };

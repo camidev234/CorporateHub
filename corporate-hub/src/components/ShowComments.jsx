@@ -18,10 +18,10 @@ export const ShowComments = ({ company_id }) => {
     };
 
     getComments();
-  });
+  }, [company_id]);
 
   return isLoading ? (
-    <div className="comment w-full">
+    <div className="comment w-full flex flex-col gap-5">
       <div className="bg-gray-200 animate-pulse rounded-lg p-4"></div>
       <div className="stars">
         <div className="star bg-gray-200 animate-pulse rounded-lg p-4"></div>
