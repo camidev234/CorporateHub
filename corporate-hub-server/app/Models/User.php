@@ -25,6 +25,7 @@ class User extends Authenticatable
         'address',
         'description',
         'logo',
+        'score',
         'principal_activity',
         'password'
     ];

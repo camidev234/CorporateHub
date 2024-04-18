@@ -48,7 +48,7 @@ export const ModalComment = ({ onCloseModal, company_id }) => {
           <span>{stars}</span>
         </div>
         <div className="form">
-          <FormComment stars={stars} onCancelOpinion={handleCancelModal} onCloseModal={handleCloseModal} company_id={company_id}/>
+          <FormComment stars={stars} onCancelOpinion={handleCancelModal} onCloseModal={handleCloseModal} company_id={parseInt(company_id)}/>
         </div>
       </div>
     </div>

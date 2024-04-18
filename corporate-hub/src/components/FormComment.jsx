@@ -111,5 +111,5 @@ FormComment.propTypes = {
   stars: PropTypes.number.isRequired,
   onCancelOpinion: PropTypes.func.isRequired,
   onCloseModal: PropTypes.func.isRequired,
-  company_id: PropTypes.string.isRequired
+  company_id: PropTypes.number.isRequired
 };

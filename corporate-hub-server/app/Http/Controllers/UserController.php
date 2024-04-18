@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -10,6 +11,24 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+    public function updateCompanyScore($user_id, $score)
+    {
+        $user = User::find($user_id);
+        $userScores = Comment::where('user_id', $user->id)->get();
+        if (count($userScores) == 0) {
+            $user->score = $score;
+            $user->save();
+        } else {
+            $scoreProm = ($user->score + $score) / count($userScores);
+            $user->score = $scoreProm;
+        }
+
+        $user->save();
+
+        return $score;
+    }
+
     public function store(UserRequest $request): JsonResponse
     {
         $newUser = new User();
@@ -85,7 +104,7 @@ class UserController extends Controller
                 'score' => $user->score,
                 'description' => $user->description
             ]
-            ];
+        ];
 
         return response()->json([
             'userFind' => $data

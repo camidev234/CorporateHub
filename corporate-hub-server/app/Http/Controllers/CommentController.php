@@ -21,6 +21,10 @@ class CommentController extends Controller
         $comment->score = $request->score;
         $comment->save();
 
+        $userController = new UserController();
+
+        $userController->updateCompanyScore($comment->user_id, $comment->score);
+
         return response()->json([
             'comment' => $comment
         ], 201);
