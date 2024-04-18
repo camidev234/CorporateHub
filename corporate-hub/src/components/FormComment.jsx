@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-export const FormComment = ({ stars }) => {
+export const FormComment = ({ stars, onCancelOpinion, onCloseModal }) => {
   const [disabled, setDisabled] = useState(true);
 
-  const [ opinion, setOpinion ] = useState({
+  const [opinion, setOpinion] = useState({
     autor: "",
     description: "",
-    score: stars
+    score: stars,
   });
 
   const stylesDisabled =
     "w-[47%] p-2 rounded-md font-medium bg-zinc-700 text-zinc-400";
 
   const handleAutorChange = (e) => {
-    setOpinion({...opinion, autor: e.target.value})
+    setOpinion({ ...opinion, autor: e.target.value });
   };
 
   const handleChangeDescription = (e) => {
-    setOpinion({...opinion, description: e.target.value});
+    setOpinion({ ...opinion, description: e.target.value });
   };
 
   useEffect(() => {
@@ -29,8 +29,16 @@ export const FormComment = ({ stars }) => {
     }
   }, [stars, opinion.autor]);
 
+  const cancel = () => {
+    if(opinion.description.length == 0 && opinion.autor.length == 0) {
+        onCloseModal();
+    } else {
+        onCancelOpinion();
+    }
+  };
+
   return (
-    <form action="" className="w-[100%] flex flex-col pb-2 pt-2 gap-3">
+    <form action="" className="w-[100%] flex flex-col pb-2 pt-2 gap-3" onSubmit={(e) => e.preventDefault()}>
       <input
         type="text"
         placeholder="Autor"
@@ -54,14 +62,17 @@ export const FormComment = ({ stars }) => {
         </section>
       ) : null}
       <section className="btns flex gap-[5%] justify-center">
-        <button className="w-[47%] p-2 rounded-md border-[1px] font-medium text-blue-300 hover:bg-gray-400 hover:bg-opacity-10">
+        <button
+          className="w-[47%] p-2 rounded-md border-[1px] font-medium text-blue-300 hover:bg-gray-400 hover:bg-opacity-10"
+          onClick={cancel}
+        >
           Cancelar
         </button>
         <button
           className={
             disabled
               ? stylesDisabled
-              : "w-[47%] p-2 rounded-md font-medium bg-blue-800"
+              : "w-[47%] p-2 rounded-md font-medium bg-blue-800 hover:bg-blue-900"
           }
           disabled={stars < 1 ? true : false}
         >
@@ -73,5 +84,7 @@ export const FormComment = ({ stars }) => {
 };
 
 FormComment.propTypes = {
-    stars: PropTypes.number.isRequired
-}
+  stars: PropTypes.number.isRequired,
+  onCancelOpinion: PropTypes.func.isRequired,
+  onCloseModal: PropTypes.func.isRequired
+};
