@@ -3,7 +3,7 @@ import { BsStar, BsStarFill } from "react-icons/bs";
 import PropTypes from 'prop-types';
 
 export const ModalCommentStars = ({ onAddStar, onDeleteStar }) => {
-  const starColor = "text-yellow-500";
+  const starColor = "text-yellow-500 text-lg";
 
   const [starOneIsClicked, setStarOneIsClicked] = useState(false);
   const [starTwoIsClicked, setStarTwoIsClicked] = useState(false);
@@ -57,7 +57,7 @@ export const ModalCommentStars = ({ onAddStar, onDeleteStar }) => {
   };
 
   return (
-    <section className="flex gap-1">
+    <section className="flex gap-1 text-lg">
       {!starOneIsClicked ? (
         <BsStar onClick={() => handleStarClick(1)} />
       ) : (

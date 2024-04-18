@@ -58,7 +58,7 @@ export const CompanyInfo = () => {
     <section className="companyInfo bg-gray-800 w-[62%] mb-6 rounded-lg h-auto pl-5 pr-5 pb-7 text-white m-auto mt-5 mb-7s">
       {
         modalVisible ? (
-          <section className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-gray-950 bg-opacity-50">
+          <section className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-gray-950 bg-opacity-70">
             <ModalComment onCloseModal={closeModal}/>
           </section>
         ) : null
