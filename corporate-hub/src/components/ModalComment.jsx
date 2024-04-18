@@ -15,18 +15,24 @@ export const ModalComment = ({ onCloseModal }) => {
     setStars(stars + 1);
   };
 
+  const deleteStar = () => {
+    setStars(stars - 1);
+  };
+
   return (
-    <div className="modal bg-gray-700 w-[30%] flex flex-col justify-center items-center p-3 rounded-lg z-60 opacity-100">
+    <div className="modal bg-gray-700 w-[40%] flex flex-col justify-center items-center p-3 rounded-lg z-60 border-[1px] border-white">
       <div className="modalContent w-full">
         <div className="t flex justify-between w-full">
           <h1>Agrega una reseña</h1>
           <BsX className="text-3xl cursor-pointer" onClick={handleCloseModal} />
         </div>
         <div className="stars flex items-center gap-2">
-          <ModalCommentStars onAddStar={addStar}/>
+          <ModalCommentStars onAddStar={addStar} onDeleteStar={deleteStar}/>
           <span>{stars}</span>
         </div>
-        <div className="form"></div>
+        <div className="form">
+          
+        </div>
       </div>
     </div>
   );

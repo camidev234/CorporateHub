@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import PropTypes from 'prop-types';
 
-export const ModalCommentStars = ({ onAddStar }) => {
+export const ModalCommentStars = ({ onAddStar, onDeleteStar }) => {
   const starColor = "text-yellow-500";
 
   const [starOneIsClicked, setStarOneIsClicked] = useState(false);
@@ -15,18 +15,41 @@ export const ModalCommentStars = ({ onAddStar }) => {
     switch (starNumber) {
       case 1:
         setStarOneIsClicked(!starOneIsClicked);
+        starOneIsClicked ? onDeleteStar() : onAddStar(); 
         break;
       case 2:
+        // if(!starOneIsClicked) {
+        //   setStarOneIsClicked(!starOneIsClicked);
+        // }
         setStarTwoIsClicked(!starTwoIsClicked);
+        starTwoIsClicked ? onDeleteStar() : onAddStar(); 
         break;
       case 3:
+        // if(!starOneIsClicked && !starTwoIsClicked) {
+        //   setStarOneIsClicked(!starOneIsClicked);
+        //   setStarTwoIsClicked(!starTwoIsClicked);
+        // }
         setStarThreeIsClicked(!starThreeIsClicked);
+        starThreeIsClicked ? onDeleteStar() : onAddStar(); 
         break;
       case 4:
+        // if(!starOneIsClicked && !starTwoIsClicked && !starThreeIsClicked) {
+        //   setStarOneIsClicked(!starOneIsClicked);
+        //   setStarTwoIsClicked(!starTwoIsClicked);
+        //   setStarThreeIsClicked(!starThreeIsClicked);
+        // }
         setStarFourIsClicked(!starFourIsClicked);
+        starFourIsClicked ? onDeleteStar() : onAddStar(); 
         break;
       case 5:
+        // if(!starOneIsClicked && !starTwoIsClicked && !starThreeIsClicked && !starFourIsClicked) {
+        //   setStarOneIsClicked(!starOneIsClicked);
+        //   setStarTwoIsClicked(!starTwoIsClicked);
+        //   setStarThreeIsClicked(!starThreeIsClicked);
+        //   setStarFourIsClicked(!starFourIsClicked);
+        // }
         setStarFiveIsClicked(!starFiveIsClicked);
+        starFiveIsClicked ? onDeleteStar() : onAddStar(); 
         break;
       default:
         null;
@@ -63,3 +86,8 @@ export const ModalCommentStars = ({ onAddStar }) => {
     </section>
   );
 };
+
+ModalCommentStars.propTypes = {
+  onAddStar: PropTypes.func.isRequired,
+  onDeleteStar: PropTypes.func.isRequired
+}

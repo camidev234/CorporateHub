@@ -55,10 +55,10 @@ export const CompanyInfo = () => {
       </div>
     </section>
   ) : (
-    <section className="companyInfo bg-gray-800 w-[95%] rounded-lg h-auto pl-5 pr-5 pb-7 text-white m-auto mt-5 mb-7s">
+    <section className="companyInfo bg-gray-800 w-[62%] mb-6 rounded-lg h-auto pl-5 pr-5 pb-7 text-white m-auto mt-5 mb-7s">
       {
         modalVisible ? (
-          <section className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-gray-900 opacity-90">
+          <section className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-gray-950 bg-opacity-50">
             <ModalComment onCloseModal={closeModal}/>
           </section>
         ) : null
@@ -167,7 +167,7 @@ export const CompanyInfo = () => {
           <span>{showComments ? <BsChevronUp /> : <BsChevronDown />}</span>
         </div>
         {showComments ? (
-          <div className="mt-4 bg-orange-500">
+          <div className="mt-4">
             <div className="flex justify-between">
               <div className="cont flex gap-3">
                 <span className="flex justify-center items-center">
