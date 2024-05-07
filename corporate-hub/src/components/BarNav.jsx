@@ -14,7 +14,7 @@ export const BarNav = () => {
         <div className="search w-[33%] flex justify-center items-center">
             <SearchBar/>
         </div>
-        <div className="bar w-[33%] flex justify-end">
+        <div className="bar w-[33%] flex justify-endddd">
           <nav className="nav w-[100%]">
             <ul className="flex w-[100%] h-[100%] justify-evenly items-center">
               <li>
